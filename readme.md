@@ -1,7 +1,7 @@
 # Glossy Chess 
 * multiplayer chess
 
-## How to run localy
+## How to run localy:
 
 * composer install
 * composer update
