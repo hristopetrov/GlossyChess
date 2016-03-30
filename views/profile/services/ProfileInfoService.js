@@ -7,7 +7,11 @@ angular.module('chessApp')
             },
 
             getActiveUsers: function () {
-                return $http.get('../../../json/users.json'); // active users.php
+                return $http.get('json/activeUsers.json'); // if we had a server : activeUsers.php
+            },
+
+            challenge: function(user){
+                return $http.post('json/activeUsers.json', {"username": user.username}) // if we had server : ...
             }
         }
     }])

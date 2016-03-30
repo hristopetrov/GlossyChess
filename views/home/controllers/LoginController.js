@@ -10,11 +10,13 @@ angular.module('chessApp')
                 usersService.login(user.email, user.password)
                     .then(function success(response) {
                         $scope.user = response.data.users[0];
+                        console.log($scope.user);
                         $rootScope.user = $scope.user;
-                        window.localStorage.setItem('user', $scope.user);
+                        window.localStorage.setItem('user', JSON.stringify($scope.user));
+                        console.log(window.localStorage.getItem('user'))
                         $rootScope.showMenu = true;
-                        $window.location.href = '#/profile';
-
+                        window.location.href = '#/profile';
+                        $uibModalInstance.close();
                     }, function error() {
                         $scope.loginError = true;
                     })
@@ -32,6 +34,12 @@ angular.module('chessApp')
                     }, function error(response) {
                         $scope.message = response.data; // response.data = 'please try again!'
                     })
+            }
+
+            $rootScope.logout = function () {
+                //usersService.logout();
+                window.localStorage.removeItem('users');
+                window.location.href = '#home';
             }
 
             $scope.ok = function () {

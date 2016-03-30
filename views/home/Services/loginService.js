@@ -34,7 +34,7 @@ angular.module('chessApp')
                //   _identity = null;
                //
                // )
-                _identity = null;
+                window.localStorage.removeItem('user');
             },
 
             makeNewRegistration: function (email, username) {
