@@ -1,0 +1,20 @@
+{
+  "success":{
+    "status": 200,
+    "message": "Success!",
+    "user": {
+      "username": "Pesho",
+      "email": "pesho@bg",
+      "points": 25
+    }
+  } ,
+  "fail":{
+    "status": 403,
+    "message": "This user already exists!"
+  },
+  "serverFailed":{
+    "status": 500,
+    "message": "Server failed!"
+  }
+
+}

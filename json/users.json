@@ -1,0 +1,20 @@
+{
+  "users": [
+    {
+      "email": "aaa@bb",
+      "username": "aaaaa",
+      "password": "12345",
+      "id": "1",
+      "imageURL": "../images/profile1.jpg",
+      "score": 0
+    },
+    {
+      "email": "bbb@bb",
+      "username": "bbbb",
+      "password": "12345",
+      "id": "2",
+      "imageURL": "../images/profile2.jpg",
+      "score": 20
+    }
+  ]
+}
