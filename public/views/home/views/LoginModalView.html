@@ -1,0 +1,78 @@
+<div ng-hide="fPassword">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="cancel()">&times;</button>
+        <h4 class="modal-title">Log in</h4>
+    </div>
+    <div class="modal-body">
+        <div class="forms">
+
+            <div class="form-container">
+                <h3 ng-class="{'alert': true, 'alert-danger': true, hidden: !loginError}">Username or password is
+                    invalid</h3>
+
+                <form role="form" name="loginForm" class="log-in-form" action="" method="post" novalidate
+                      onsubmit="return false;">
+                    <div class="form-group"
+                         ng-class="{ 'has-error' : loginForm.email.$invalid && !loginForm.email.$pristine }">
+
+                        <label class="control-label" for="">Email</label>
+
+                        <input class="form-control" type="email" ng-model="user.email" name="email" autocomplete="off"
+                               required="required">
+                        <span class="help-block"
+                              ng-show="loginForm.email.$error.email && !loginForm.email.$pristine && loginForm.email.value!=''">Enter valid email!</span>
+                        <span class="help-block"
+                              ng-show="loginForm.email.$error.required && !loginForm.email.$pristine">This field is required!</span>
+                    </div>
+
+                    <div ng-class="{'form-group' : true, 'has-error': loginForm.password.$invalid && !loginForm.password.$pristine}">
+                        <label class="control-label">Password</label>
+                        <input class="form-control" type="password" name="password" ng-model="user.password"
+                               minlength="4" maxlength="8" required>
+                        <span class="help-block" ng-show="loginForm.password.$invalid && !loginForm.password.$pristine">Password must be at least 4 symbols</span>
+                        <span class="help-block"
+                              ng-show="loginForm.password.$error.required && !loginForm.password.$pristine">Password must be at max 8 symbols</span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+
+                <a href="" ng-click="forgottenPassword()">Forgotten password</a>
+                <button class="btn btn-primary" type="button" ng-click="ok(user)" ng-disabled="!loginForm.$valid">Log in</button>
+                <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ng-show="fPassword">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="cancel()">&times;</button>
+        <h4 class="modal-title">Forgotten password</h4>
+    </div>
+    <div class="modal-body">
+        <div class="forms">
+
+            <div class="form-container">
+                <label class="control-label" for="">Email</label>
+
+                <input class="form-control" type="email" ng-model="user.email" name="email" autocomplete="off"
+                       required="required">
+                <span class="help-block"
+                      ng-show="loginForm.email.$error.email && !loginForm.email.$pristine && loginForm.email.value!=''">Enter valid email!</span>
+                <span class="help-block" ng-show="loginForm.email.$error.required && !loginForm.email.$pristine">This field is required!</span>
+
+                <div class="modal-footer">
+                    <p ng-show="show">{{message}}</p>
+                    <button class="btn btn-primary" type="button" ng-click="ok()">Send</button>
+                    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
