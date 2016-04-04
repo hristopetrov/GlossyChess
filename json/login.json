@@ -1,0 +1,15 @@
+{
+  "success":{
+    "status": 200,
+    "message": "Success!"
+  } ,
+  "fail":{
+    "status": 403,
+    "message": "Wrong email or password!"
+  },
+  "serverFailed":{
+    "status": 500,
+    "message": "Server failed!"
+  }
+
+}

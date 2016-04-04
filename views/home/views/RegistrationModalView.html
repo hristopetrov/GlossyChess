@@ -1,0 +1,50 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" ng-click="cancel()">&times;</button>
+    <h4 class="modal-title">Make new registration</h4>
+</div>
+<div class="modal-body">
+    <div class="forms">
+
+        <div class="form-container">
+            <h3 ng-class="{'alert': true, 'alert-danger': true, hidden: !registrationEnd}">{{registrationMessage}}</h3>
+
+            <form role="form" name="registerForm" class="register-form" action="" method="post" novalidate onsubmit="return false;">
+                <div class="form-group" ng-class="{ 'has-error' : registerForm.email.$invalid && !registerForm.email.$pristine }">
+
+                    <label class="control-label" for="">Email:</label>
+                    <input class="form-control" type="email" ng-model="user.email" name="email" autocomplete="off" required="required" autocomplete="off">
+                    <span class="help-block" ng-show="registerForm.email.$error.email && !registerForm.email.$pristine && registerForm.email.value!=''">Enter valid email!</span>
+                    <span class="help-block" ng-show="registerForm.email.$error.required && !registerForm.email.$pristine">This field is required!</span>
+                </div>
+
+                <div ng-class="{'form-group' : true, 'has-error': registerForm.username.$invalid && !registerForm.username.$pristine}">
+                    <label class="control-label">Username:</label>
+                    <input class="form-control" type="text" name="username" ng-model="user.username" minlength="4" maxlength="8"  required autocomplete="off">
+                    <span class="help-block" ng-show="registerForm.username.$invalid && !registerForm.username.$pristine">Your username must be at least 4 symbols</span>
+                    <span class="help-block" ng-show="registerForm.username.$error.required && !registerForm.username.$pristine">Your username must be at max 8 symbols</span>
+                </div>
+
+                <div ng-class="{'form-group' : true, 'has-error': registerForm.password.$invalid && !registerForm.password.$pristine}">
+                    <label class="control-label">Password:</label>
+                    <input class="form-control" type="password" name="password" id="password" ng-model="user.password" minlength="4" maxlength="8"  required>
+                    <span class="help-block" ng-show="registerForm.password.$invalid && !registerForm.password.$pristine">Password must be at least 4 symbols</span>
+                    <span class="help-block" ng-show="registerForm.password.$error.required && !registerForm.password.$pristine">Password must be at max 8 symbols</span>
+                </div>
+
+                <div ng-class="{'form-group' : true, 'has-error': registerForm.repeatPassword.$invalid && !registerForm.repeatPassword.$pristine}">
+                    <label class="control-label">Repeat password:</label>
+                    <input class="form-control" type="password" name="repeatPassword"  ng-model="user.repeatPassword" minlength="4" maxlength="8"  required compare-to="registerForm.password" pw-check="password">
+                    <span class="help-block" ng-show="registerForm.repeatPassword.$invalid && !registerForm.repeatPassword.$pristine">Password must be at least 4 symbols</span>
+                    <span class="help-block" ng-show="registerForm.repeatPassword.$error.required && !registerForm.repeatPassword.$pristine">Password must be at max 8 symbols</span>
+                    <span class="help-block" ng-show="registerForm.repeatPassword.$error.pw" >Passwords do not match!</span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="ok(user)">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>
+</div>
