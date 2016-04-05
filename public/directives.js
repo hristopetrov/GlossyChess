@@ -16,4 +16,10 @@ angular.module('chessAppDirectives', [])
                 });
             }
         }
+    }])
+    .directive('chessBoard', [function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'templates/chessBoard.html'
+        }
     }]);

@@ -1,5 +1,6 @@
 var chessGame = (function () {
-    var gameInstance;
+   // var gameInstance;
+    this.cells = [];
 
     function init() {
         var game = new Phaser.Game(700, 700, Phaser.AUTO, 'myCanvas', {preload: preload, create: create});
@@ -22,82 +23,165 @@ var chessGame = (function () {
         }
 
         var CELL_PIXELS = 74;
+        var START_PIXELS = 54;
+        var CELL_ROWS = 8;
 
         function create() {
             game.add.image(0, 0, 'board');
-            var cells = [],
-                i = 0,
+            var i = 0,
                 j = 0;
-            for (var y = 54; y < CELL_PIXELS * 8; y += CELL_PIXELS) {
+            var horizontals = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+            for (var y = START_PIXELS; y < CELL_PIXELS * 8; y += CELL_PIXELS) {
+                j = 0;
                 cells[i] = [];
-                j = 0;
-                for (var x = 54; x < CELL_PIXELS * 8; x += CELL_PIXELS) {
+
+                for (var x = START_PIXELS; x < CELL_PIXELS * 8; x += CELL_PIXELS) {
                     var cell = game.add.image(x, y, 'cell');
-                    var parent = cell;
+                    var coordinates = horizontals[j] + (7 - i + 1);
+
+                    var cellBoard = new Cell(game, x, y, coordinates, cell);
+                    //var parent = cell;
                     cell.visible = false;
                     cell.inputEnabled = true;
                     if (i == 1) {
-                        var oppositePawn = game.add.image(x - 2, y, 'pawn_black');
-
+                        //console.log(coordinates, Math.floor(x / CELL_PIXELS));
+                        var oppositePawn = game.add.image(x - 2, y + 2, 'pawn_black');
+                        var oppositePawnFigure = new Pawn(game, cellBoard, coordinates, oppositePawn, true);
+                        oppositePawn.inputEnabled = true;
+                        cellBoard.setFigure(oppositePawnFigure);
                         //cell.addChild(whitePawn);
                     }
                     if (i == 6) {
-                        var myPawn = game.add.image(x - 2, y, 'pawn_white');
+                        var myPawn = game.add.image(x - 2, y + 2, 'pawn_white');
+                        var myPawnFigure = new Pawn(game, cellBoard, coordinates, myPawn, false);
+                        myPawn.inputEnabled = true;
+                        cellBoard.setFigure(myPawnFigure);
                     }
                     if (i == 0) {
                         if (j == 0 || j == 7) {
-                            var oppositeRook = game.add.image(x - 2, y, 'rook_black')
+                            var oppositeRook = game.add.image(x - 2, y + 2, 'rook_black');
+                            var oppositeRookFigure = new Rook(game, cellBoard, coordinates, oppositeRook, true);
+                            oppositeRook.inputEnabled = true;
+                            cellBoard.setFigure(oppositeRookFigure);
                         }
                         if (j == 1 || j == 6) {
-                            var oppositeKnight = game.add.image(x - 2, y, 'knight_black')
+                            var oppositeKnight = game.add.image(x - 2, y + 2, 'knight_black');
+                            var oppositeKnightFigure = new Knight(game, cellBoard, coordinates, oppositeKnight, true);
+                            oppositeKnight.inputEnabled = true;
+                            cellBoard.setFigure(oppositeKnightFigure);
                         }
-                        if(j == 2 || j == 5){
-                            var oppositeBishop = game.add.image(x - 2, y, 'bishop_black')
+                        if (j == 2 || j == 5) {
+                            var oppositeBishop = game.add.image(x - 2, y + 2, 'bishop_black');
+                            var oppositeBishopFigure = new Bishop(game, cellBoard, coordinates, oppositeBishop, true);
+                            oppositeBishop.inputEnabled = true;
+                            cellBoard.setFigure(oppositeBishopFigure);
                         }
-                        if(j == 3){
-                            var oppositeQueen = game.add.image(x - 2, y, 'queen_black')
+                        if (j == 3) {
+                            var oppositeQueen = game.add.image(x - 2, y + 2, 'queen_black');
+                            var oppositeQueenFigure = new Queen(game, cellBoard, coordinates, oppositeQueen, true);
+                            cellBoard.setFigure(oppositeQueenFigure);
                         }
-                        if(j == 4){
-                            var oppositeKing = game.add.image(x - 2, y , 'king_black')
+                        if (j == 4) {
+                            var oppositeKing = game.add.image(x - 2, y + 2, 'king_black');
+                            var oppositeKingFigure = new King(game, cellBoard, coordinates, oppositeKing, true);
+                            oppositeKing.inputEnabled = true;
+                            cellBoard.setFigure(oppositeKingFigure);
                         }
                     }
-                    if(i == 7) {
+                    if (i == 7) {
                         if (j == 0 || j == 7) {
-                            var myRook = game.add.image(x - 2, y, 'rook_white')
+                            var myRook = game.add.image(x - 2, y + 2, 'rook_white');
+                            var myRookFigure = new Rook(game, cells[i][j], coordinates, myRook, false);
+                            myRook.inputEnabled = true;
+                            cellBoard.setFigure(myRookFigure);
                         }
                         if (j == 1 || j == 6) {
-                            var myKnight = game.add.image(x - 2, y, 'knight_white')
+                            var myKnight = game.add.image(x - 2, y + 2, 'knight_white');
+                            var myKnightFigure = new Knight(game, cells[i][j], coordinates, myKnight, false);
+                            myKnight.inputEnabled = true;
+                            cellBoard.setFigure(myKnightFigure);
                         }
-                        if(j == 2 || j == 5){
-                            var myBishop = game.add.image(x - 2, y, 'bishop_white')
+                        if (j == 2 || j == 5) {
+                            var myBishop = game.add.image(x - 2, y + 2, 'bishop_white');
+                            var myBishopFigure = new Bishop(game, cells[i][j], coordinates, myBishop, false);
+                            myBishop.inputEnabled = true;
+                            cellBoard.setFigure(myBishopFigure);
                         }
-                        if(j == 3){
-                            var myQueen = game.add.image(x - 2, y, 'queen_white')
+                        if (j == 3) {
+                            var myQueen = game.add.image(x - 2, y + 2, 'queen_white');
+                            var myQueenFigure = new Queen(game, cells[i][j], coordinates, myQueen, false);
+                            myQueen.inputEnabled = true;
+                            cellBoard.setFigure(myQueenFigure);
                         }
-                        if(j == 4){
-                            var myKing = game.add.image(x - 2, y , 'king_white')
+                        if (j == 4) {
+                            var myKing = game.add.image(x - 2, y + 2, 'king_white');
+                            var myKingFigure = new King(game, cells[i][j], coordinates, myKing, false);
+                            myKing.inputEnabled = true;
+                            cellBoard.setFigure(myKingFigure);
                         }
                     }
 
-                    (function (cell) {
-                        cell.events.onInputDown.add(listener, this)
-                    })(cell);
+                  /*  (function (cell) {
+                        cell.events.onInputDown.add(function () {
+                            cell.visible = false;
+                        }, this);
+                        //console.log(cellBoard.getCoordinates());
+                    })(cellBoard.getImage());*/
+                    cells[i][j] = cellBoard;
 
-                    cells[i][j] = cell;
+
                     j++;
                 }
                 i++;
             }
 
-            /*   var cell = game.add.image(54,54,'cell');
-             cell.inputEnabled = true;
-             cell.events.onInputDown.add(listener, this);*/
-
-            function listener() {
-                cell.visible = true;
-                console.log('clicked');
-            }
         }
+
+        function cellAt(position) {
+            var found = false;
+            var cell = {};
+            for(var i = 0; i < CELL_ROWS; i++){
+                for(var j = 0; j < CELL_ROWS; j++){
+                    if(cells[i][j].getCoordinates() === position){
+                        found = true;
+                        cell = cells[i][j];
+                        break;
+                    }
+                }
+            }
+
+            return cell;
+        }
+
+
+        (function initializeFigures() {
+            console.log('initializeFigures', cells);
+            var self = this;
+            for(var i = 0; i < CELL_ROWS; i++){
+                for(var j = 0; j < CELL_ROWS; j++){
+                    var index = cells[i][j].getCoordinates();
+                    var cell = cells[i][j];
+
+                    (function (cell){
+                        var figureImage = cell.getFigure().getImage();
+                        figureImage.events.onInputDown( function(){
+                            if (!cell.getFigure().getIsOpposite() ) {
+                                //event.stopPropagation();
+                                cell.getFigure().readyToMove(self);
+                                cell.getFigure().move(self);
+                            }
+
+                        }, this);
+
+                    })(cell);
+
+                }
+            }
+
+
+        })();
+
+
     }
 
 

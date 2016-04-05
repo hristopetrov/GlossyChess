@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 var elixir = require('laravel-elixir');
 
 /*
@@ -14,7 +14,7 @@ var elixir = require('laravel-elixir');
 
 elixir(function(mix) {
     mix.sass('app.scss');
-=======
+
 var gulp = require('gulp'),
     sass = require('gulp-sass'),
     minifyCSS = require('gulp-cssnano'),
@@ -38,5 +38,6 @@ gulp.task('sass', function() {
 
 gulp.task('default', ['sass'], function() {
     gulp.watch('scss/**/*.scss', ['sass']);
->>>>>>> 9c69339ae2d33f841c144941c3832b44e0caaf95
+
 });
+}
