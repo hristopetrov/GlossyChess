@@ -2,16 +2,16 @@ var Bishop = (function (parent) {
 
     'use strict';
 
-    function Bishop($dom, cell, isOpposite){
+    function Bishop(game, cell, chessCoordinates, image, isOpposite) {
 
-        parent.call(this, $dom, cell, isOpposite);
+        parent.call(this, game, cell, chessCoordinates, image, isOpposite);
 
     }
 
     Bishop.prototype = Object.create(parent.prototype);
     Bishop.prototype.constructor = Bishop;
 
-    Bishop.prototype.readyToMove = function(board){
+    Bishop.prototype.readyToMove = function(game){
         var cell = this.getCell();
         var position = cell.getCoordinates();
         var horizontal = position.charAt(1);
@@ -24,7 +24,7 @@ var Bishop = (function (parent) {
         console.log('i am in bishop.readyToMove');
         //debugger;
         for(var i = parseInt(horizontal) + 1, k = verticalIndex - 1; i <= 8 &&  k >= asciiCodeOfA; i++, k--){
-            var currentCell = board.cellAt(String.fromCharCode(k) + (parseInt(i)));
+            var currentCell = game.cellAt(String.fromCharCode(k) + (parseInt(i)));
             console.log(i);
             if(currentCell.getFigure() === null /*|| (currentCell.getFigure() !== null && currentCell.getFigure().getIsOpposite())*/){
                 activeCells.push(currentCell);
@@ -39,7 +39,7 @@ var Bishop = (function (parent) {
         }
 
         for(var i = parseInt(horizontal) + 1, k = verticalIndex + 1; i <= 8 &&  k <= asciiCodeOfH; i++, k ++){
-            var currentCell = board.cellAt(String.fromCharCode(k) + i);
+            var currentCell = game.cellAt(String.fromCharCode(k) + i);
             if(currentCell.getFigure() === null /*|| (currentCell.getFigure() !== null && currentCell.getFigure().getIsOpposite())*/){
                 activeCells.push(currentCell);
             }
@@ -53,7 +53,7 @@ var Bishop = (function (parent) {
         }
 
         for(var i = parseInt(horizontal) - 1, k = verticalIndex - 1; i >= 1 &&  k >= asciiCodeOfA; i--, k --){
-            var currentCell = board.cellAt(String.fromCharCode(k) + i);
+            var currentCell = game.cellAt(String.fromCharCode(k) + i);
             if(currentCell.getFigure() === null /*|| (currentCell.getFigure() !== null && currentCell.getFigure().getIsOpposite())*/){
                 activeCells.push(currentCell);
             }
@@ -67,7 +67,7 @@ var Bishop = (function (parent) {
         }
 
         for(var i = parseInt(horizontal) - 1, k = verticalIndex + 1; i >= 1 &&  k <= asciiCodeOfH; i--, k ++){
-            var currentCell = board.cellAt(String.fromCharCode(k) + i);
+            var currentCell = game.cellAt(String.fromCharCode(k) + i);
             if(currentCell.getFigure() === null /*|| (currentCell.getFigure() !== null && currentCell.getFigure().getIsOpposite())*/){
                 activeCells.push(currentCell);
             }
@@ -81,7 +81,7 @@ var Bishop = (function (parent) {
         }
 
         for (var i = 0; i < activeCells.length; i++) {
-            activeCells[i].active();
+            activeCells[i].getImage().visible = true;
         }
 
         this.setActiveCells(activeCells);

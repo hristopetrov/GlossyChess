@@ -1,8 +1,9 @@
 var King = (function (parent) {
 
-    function King($dom, cell, playerID){
+    function King(game, cell, chessCoordinates, image, isOpposite) {
 
-        parent.call(this, $dom, cell, playerID);
+        parent.call(this, game, cell, chessCoordinates, image, isOpposite);
+
     }
 
     King.prototype = Object.create(parent.prototype);
@@ -52,7 +53,7 @@ var King = (function (parent) {
         }
         console.log(activeCells);
         for (var i = 0; i < activeCells.length; i++) {
-            activeCells[i].active();
+            activeCells[i].getImage().visible = true;
         }
 
         this.setActiveCells(activeCells);

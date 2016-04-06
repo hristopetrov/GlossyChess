@@ -9,7 +9,7 @@ var Rook = (function (parent) {
     Rook.prototype = Object.create(parent.prototype);
     Rook.prototype.constructor = Rook;
     
-    Rook.prototype.readyToMove = function (board) {
+    Rook.prototype.readyToMove = function (game) {
         var cell = this.getCell();
         var position = cell.getCoordinates();
         var horizontal = position.charAt(1);
@@ -23,11 +23,11 @@ var Rook = (function (parent) {
         console.log(i);
         for(var i = parseInt(horizontal) - 1; i > 0; i--){
             console.log(vertical + i);
-            if(board.cellAt(vertical + i).getFigure() == null /*|| board.cellAt(vertical + i).getFigure().getIsOpposite()*/){
-                activeCells.push(board.cellAt(vertical + i));
+            if(game.cellAt(vertical + i).getFigure() == null /*|| board.cellAt(vertical + i).getFigure().getIsOpposite()*/){
+                activeCells.push(game.cellAt(vertical + i));
             }
-            else if(board.cellAt(vertical + i).getFigure() !== null && board.cellAt(vertical + i).getFigure().getIsOpposite()){
-                activeCells.push(board.cellAt(vertical + i));
+            else if(game.cellAt(vertical + i).getFigure() !== null && game.cellAt(vertical + i).getFigure().getIsOpposite()){
+                activeCells.push(game.cellAt(vertical + i));
                 break;
             }
             else{
@@ -36,12 +36,12 @@ var Rook = (function (parent) {
         }
         for(var i = parseInt(horizontal) + 1; i <= 8; i++){
             console.log(vertical + (i));
-            console.log(board.cellAt(vertical + (i)).getFigure());
-            if(board.cellAt(vertical + (i)).getFigure() == null /*|| board.cellAt(vertical + (i)).getFigure().getIsOpposite()*/){
-                activeCells.push(board.cellAt(vertical + i));
+            console.log(game.cellAt(vertical + (i)).getFigure());
+            if(game.cellAt(vertical + (i)).getFigure() == null /*|| board.cellAt(vertical + (i)).getFigure().getIsOpposite()*/){
+                activeCells.push(game.cellAt(vertical + i));
             }
-            else if(board.cellAt(vertical + i).getFigure() !== null && board.cellAt(vertical + i).getFigure().getIsOpposite()){
-                activeCells.push(board.cellAt(vertical + i));
+            else if(game.cellAt(vertical + i).getFigure() !== null && game.cellAt(vertical + i).getFigure().getIsOpposite()){
+                activeCells.push(game.cellAt(vertical + i));
                 break;
             }
             else{
@@ -51,7 +51,7 @@ var Rook = (function (parent) {
 
         for(var i = verticalIndex - 1; i >= asciiCodeOfA; i--){
             var currentVertical = String.fromCharCode(i);
-            var currentCell = board.cellAt(currentVertical + horizontal);
+            var currentCell = game.cellAt(currentVertical + horizontal);
 
             if(currentCell.getFigure() == null ){
                 activeCells.push(currentCell);
@@ -66,12 +66,12 @@ var Rook = (function (parent) {
         }
         for(var i = verticalIndex + 1; i <= asciiCodeOfH; i++){
             var currentVertical = String.fromCharCode(i);
-            var currentCell = board.cellAt(currentVertical + horizontal);
+            var currentCell = game.cellAt(currentVertical + horizontal);
             if(currentCell.getFigure() == null ){
                 activeCells.push(currentCell);
             }
-            else if(board.cellAt(currentVertical + horizontal).getFigure() !== null && board.cellAt(currentVertical + horizontal).getFigure().getIsOpposite()){
-                activeCells.push(board.cellAt(currentVertical + horizontal));
+            else if(game.cellAt(currentVertical + horizontal).getFigure() !== null && game.cellAt(currentVertical + horizontal).getFigure().getIsOpposite()){
+                activeCells.push(game.cellAt(currentVertical + horizontal));
                 break;
             }
             else{
@@ -80,7 +80,7 @@ var Rook = (function (parent) {
         }
 
         for (var i = 0; i < activeCells.length; i++) {
-            activeCells[i].active();
+            activeCells[i].getImage().visible = true;
         }
 
         this.setActiveCells(activeCells);

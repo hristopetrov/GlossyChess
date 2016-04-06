@@ -1,15 +1,15 @@
 var Knight = (function (parent) {
 
-    function Knight($dom, cell, isOpposite) {
+    function Knight(game, cell, chessCoordinates, image, isOpposite) {
 
-        parent.call(this, $dom, cell, isOpposite);
+        parent.call(this, game, cell, chessCoordinates, image, isOpposite);
 
     }
 
     Knight.prototype = Object.create(Figure.prototype);
     Knight.constructor = Knight;
 
-    Knight.prototype.readyToMove = function (board) {
+    Knight.prototype.readyToMove = function (game) {
         var cell = this.getCell();
         var position = cell.getCoordinates();
         var horizontal = parseInt(position.charAt(1));
@@ -22,7 +22,7 @@ var Knight = (function (parent) {
 
         if (horizontal + 2 <= 8 && verticalIndex + 1 <= asciiCodeOfH) {
             console.log(String.fromCharCode(verticalIndex + 1) + (horizontal + 2));
-            var currentCell = board.cellAt(String.fromCharCode(verticalIndex + 1) + (horizontal + 2));
+            var currentCell = game.cellAt(String.fromCharCode(verticalIndex + 1) + (horizontal + 2));
             console.log(currentCell);
             if (currentCell.getFigure() == null || (currentCell.getFigure() != null && currentCell.getFigure().getIsOpposite())) {
                 activeCells.push(currentCell);
@@ -30,45 +30,45 @@ var Knight = (function (parent) {
         }
         console.log(verticalIndex - 1 >= asciiCodeOfA);
         if (horizontal + 2 <= 8 && verticalIndex - 1 >= asciiCodeOfA) {
-            var currentCell = board.cellAt(String.fromCharCode(verticalIndex - 1) + (horizontal + 2));
+            var currentCell = game.cellAt(String.fromCharCode(verticalIndex - 1) + (horizontal + 2));
             if (currentCell.getFigure() == null || (currentCell.getFigure() != null && currentCell.getFigure().getIsOpposite())) {
                 activeCells.push(currentCell);
             }
         }
 
         if(horizontal + 1 <= 8 && verticalIndex + 2 <= asciiCodeOfH){
-            var currentCell = board.cellAt(String.fromCharCode(verticalIndex + 2) + (horizontal + 1));
+            var currentCell = game.cellAt(String.fromCharCode(verticalIndex + 2) + (horizontal + 1));
             if(currentCell.getFigure() == null || (currentCell.getFigure() != null && currentCell.getFigure().getIsOpposite())){
                 activeCells.push(currentCell);
             }
         }
         if(horizontal - 1 >= 1 && verticalIndex + 2 <= asciiCodeOfH){
-            var currentCell = board.cellAt(String.fromCharCode(verticalIndex + 2) + (horizontal - 1));
+            var currentCell = game.cellAt(String.fromCharCode(verticalIndex + 2) + (horizontal - 1));
             if(currentCell.getFigure() == null || (currentCell.getFigure() != null && currentCell.getFigure().getIsOpposite())){
                 activeCells.push(currentCell);
             }
         }
         if(horizontal - 2 >= 1 && verticalIndex + 1 <= asciiCodeOfH){
-            var currentCell = board.cellAt(String.fromCharCode(verticalIndex + 1) + (horizontal - 2));
+            var currentCell = game.cellAt(String.fromCharCode(verticalIndex + 1) + (horizontal - 2));
             if(currentCell.getFigure() == null || (currentCell.getFigure() != null && currentCell.getFigure().getIsOpposite())){
                 activeCells.push(currentCell);
             }
         }
         if(horizontal - 2 >= 1 && verticalIndex - 1 >= asciiCodeOfA){
             console.log(String.fromCharCode(verticalIndex - 1) + (horizontal - 2));
-            var currentCell = board.cellAt(String.fromCharCode(verticalIndex - 1) + (horizontal - 2));
+            var currentCell = game.cellAt(String.fromCharCode(verticalIndex - 1) + (horizontal - 2));
             if(currentCell.getFigure() == null || (currentCell.getFigure() != null && currentCell.getFigure().getIsOpposite())){
                 activeCells.push(currentCell);
             }
         }
         if(horizontal - 1 >= 1 && verticalIndex - 2 >= asciiCodeOfA){
-            var currentCell = board.cellAt(String.fromCharCode(verticalIndex - 2) + (horizontal - 1));
+            var currentCell = game.cellAt(String.fromCharCode(verticalIndex - 2) + (horizontal - 1));
             if(currentCell.getFigure() == null || (currentCell.getFigure() != null && currentCell.getFigure().getIsOpposite())){
                 activeCells.push(currentCell);
             }
         }
         if(horizontal + 1 <= 8 && verticalIndex - 2 >= asciiCodeOfA){
-            var currentCell = board.cellAt(String.fromCharCode(verticalIndex - 2) + (horizontal + 1));
+            var currentCell = game.cellAt(String.fromCharCode(verticalIndex - 2) + (horizontal + 1));
             if(currentCell.getFigure() == null || (currentCell.getFigure() != null && currentCell.getFigure().getIsOpposite())){
                 activeCells.push(currentCell);
             }
@@ -76,7 +76,7 @@ var Knight = (function (parent) {
         console.log(activeCells);
 
         for (var i = 0; i < activeCells.length; i++) {
-            activeCells[i].active();
+            activeCells[i].getImage().visible = true;
         }
 
         this.setActiveCells(activeCells);

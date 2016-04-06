@@ -106,16 +106,19 @@ var Figure = (function () {
             (function (activeCell) {
                 activeCell.getImage().events.onInputDown.add( function () {
 
-                    //console.log('Clicked!');
+                    console.log('Clicked!');
                     /*if (activeCell.getFigure() != null) {
                         $(".my-taken-figures").append(activeCell.getFigure().getDom());
                         activeCell.getDom().html(self.getDom());
                     }*/
                     var image = self.getImage();
-                    game.add.tween(image).to({x: activeCell.getImage().getX(), y: activeCell.getImage().getY()}, 0, Phaser.Easing.Linear, true)
+                    var animation = game.add.tween(image);
+                    animation.to({x: activeCell.getImage().x, y: activeCell.getImage().y}, 1500, Phaser.Easing.Linear.In, true);
+                    animation.start();
                     activeCell.setFigure(self);
                     //$(this).append(self.getDom());
-                    self.getImage.setCoordinates(activeCell.getCoordinates())
+                    /*self.getImage().x = activeCell.getX();
+                    self.getImage().y = activeCell.getY();*/
                     self.setCell(activeCell);
                     self.setActiveCells([]);
                     currentCell.setFigure(null);
@@ -130,23 +133,22 @@ var Figure = (function () {
                     console.log('move: ' + moveCharcode);
                     //send to server
 
-                    conn.send(self.makeMirrorMove(moveCharcode));
+                    //conn.send(self.makeMirrorMove(moveCharcode));
 
                 }, this)
             })(activeCells[i])
         }
-     /*   if (activeCells.length > 0) {
-            game.events.onInputDown(function (event) {
-                if ((event.target).visible = true) {
-                    $('.active').each(function () {
-                        $(this).removeClass('active').off('click.moveFigure');
-                        ;
-                    })
+        if (activeCells.length > 0) {
+            game.events.onInputDown(function (target) {
+                if (target.name === 'board' ) {
+                   for(var i = 0; i < activeCells.length; i++){
+                       activeCells[i].visible = false;
+                   }
                 }
 
                 activeCells = [];
             });
-        }*/
+        }
     }
 
     return Figure;
