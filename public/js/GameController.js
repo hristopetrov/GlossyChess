@@ -175,12 +175,12 @@ var chessGame = (function () {
                         if (cell.getFigure() != null) {
                             var figureImage = cell.getFigure().getImage();
                             figureImage.events.onInputDown.add(function () {
-                                if (!cell.getFigure().getIsOpposite()) {
+                                if (!this.currentFigure.getIsOpposite()) {
                                     //event.stopPropagation();
-                                    cell.getFigure().readyToMove(self.game);
-                                    cell.getFigure().move(self.game);
+                                    this.currentFigure.readyToMove(self.game);
+                                    this.currentFigure.move(self.game);
                                 }
-                            }, this)
+                            }, {currentFigure: cell.getFigure()})
 
                         }
                     })(cell);

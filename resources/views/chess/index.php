@@ -13,22 +13,8 @@
 </head>
 <body>
 <div>
-    <nav class="navbar navbar-default" ng-show="$root.showMenu">
+    <nav class="navbar navbar-default" ng-show="showMenu">
         <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <!--   <div class="navbar-header">
-                   <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                           data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                       <span class="sr-only">Toggle navigation</span>
-                       <span class="icon-bar"></span>
-                       <span class="icon-bar"></span>
-                       <span class="icon-bar"></span>
-                   </button>
-                   <a class="navbar-brand" href="#">Brand</a>
-               </div>-->
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-
             <div id="logo-container">
                     <span id="logo">
                         <img src="images/vector_logo_final.png" alt="logo"/>
@@ -52,6 +38,7 @@
 
 </div>
 
+
 <script src="node_modules/angular-resource/angular-resource.min.js"></script>
 <script src="node_modules/angular-route/angular-route.min.js"></script>
 <script src="node_modules/angular-animate/angular-animate.min.js"></script>
@@ -61,8 +48,10 @@
 <script src="js/GameController.js"></script>
 <script src="app.js"></script>
 <script src="directives.js"></script>
-<script src="views/home/Services/usersService.js"></script>
+<!--<script src="views/home/Services/usersService.js"></script>-->
 <script src="js/SocketService.js"></script>
+<script src="views/home/services/identityService.js"></script>
+<script src="views/home/services/authService.js"></script>
 <script src="views/home/controllers/HomeController.js"></script>
 <script src="views/home/controllers/LoginController.js"></script>
 <script src="views/home/controllers/RegistrationController.js"></script>

@@ -1,4 +1,6 @@
 var Figure = (function () {
+    var self = this;
+
     function Figure(game, cell, chessCoordinates, image, isOpposite) {
 
         if (typeof this.constructor === 'Figure') {
@@ -103,42 +105,42 @@ var Figure = (function () {
         var currentCell = self.getCell();
         for (var i = 0; i < activeCells.length; i++) {
 
+            function moveFigure() {
+
+                console.log('Clicked!');
+                /*if (activeCell.getFigure() != null) {
+                 $(".my-taken-figures").append(activeCell.getFigure().getDom());
+                 activeCell.getDom().html(self.getDom());
+                 }*/
+
+                var image = this.currentFigure.getImage();
+                var animation = game.add.tween(image);
+                animation.to({x: this.activeCell.getImage().x, y: this.activeCell.getImage().y}, 1500, Phaser.Easing.Linear.In, true);
+                animation.start();
+                this.activeCell.setFigure(this.currentFigure);
+                this.currentFigure.setCell(this.activeCell);
+                this.currentFigure.setActiveCells([]);
+                this.currentCell.setFigure(null);
+
+                for (var j = 0; j < this.activeCells.length; j++) {
+                    this.activeCells[j].getImage().visible = false;
+                    this.activeCells[j].getImage().events.onInputDown.dispose();
+                }
+
+                var moveCharcode = this.currentCell.getCoordinates() + ' ' + this.activeCell.getCoordinates();
+                console.log('move: ' + moveCharcode);
+                //send to server
+
+                //conn.send(self.makeMirrorMove(moveCharcode));
+
+            }
+
             (function (activeCell) {
-                activeCell.getImage().events.onInputDown.add( function () {
-
-                    console.log('Clicked!');
-                    /*if (activeCell.getFigure() != null) {
-                        $(".my-taken-figures").append(activeCell.getFigure().getDom());
-                        activeCell.getDom().html(self.getDom());
-                    }*/
-                    var image = self.getImage();
-                    var animation = game.add.tween(image);
-                    animation.to({x: activeCell.getImage().x, y: activeCell.getImage().y}, 1500, Phaser.Easing.Linear.In, true);
-                    animation.start();
-                    activeCell.setFigure(self);
-                    //$(this).append(self.getDom());
-                    /*self.getImage().x = activeCell.getX();
-                    self.getImage().y = activeCell.getY();*/
-                    self.setCell(activeCell);
-                    self.setActiveCells([]);
-                    currentCell.setFigure(null);
-                    //console.log(self);
-                    //$(currentCell.getDom()).html('');
-                    for (var j = 0; j < activeCells.length; j++) {
-                        activeCells[j].getImage().visible = false;
-                        //$(activeCells[j].getDom()).off('click.moveFigure');
-                    }
-
-                    var moveCharcode = currentCell.getCoordinates() + ' ' + activeCell.getCoordinates();
-                    console.log('move: ' + moveCharcode);
-                    //send to server
-
-                    //conn.send(self.makeMirrorMove(moveCharcode));
-
-                }, this)
+                activeCell.getImage().events.onInputDown.add( moveFigure, {activeCell: activeCell, currentCell: currentCell, activeCells: activeCells, currentFigure: self});
             })(activeCells[i])
+
         }
-        if (activeCells.length > 0) {
+        /*if (activeCells.length > 0) {
             game.events.onInputDown(function (target) {
                 if (target.name === 'board' ) {
                    for(var i = 0; i < activeCells.length; i++){
@@ -148,7 +150,7 @@ var Figure = (function () {
 
                 activeCells = [];
             });
-        }
+        }*/
     }
 
     return Figure;

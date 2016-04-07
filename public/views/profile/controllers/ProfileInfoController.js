@@ -1,12 +1,13 @@
 angular.module('chessApp')
     .controller('ProfileInfoController', ['$scope', '$rootScope' , 'ProfileInfoService', function ($scope, $rootScope, ProfileInfoService) {
-        $scope.user = JSON.parse(window.sessionStorage.getItem('user'));
+        $scope.user = JSON.parse(window.localStorage.getItem('currentUser'));
+        console.log($scope.user);
         $scope.image = $scope.user.imageURL;
         $scope.score = $scope.user.score;
         $scope.numberOfPlayedGames = $scope.user.numberOfPlayedGames;
         $rootScope.showMenu = true;
         $scope.activeUsers = getActiveUsers();
-        console.log($scope.activeUsers);
+        //console.log($scope.activeUsers);
         $scope.forEdit = false;
         $scope.rate = $scope.user.rating;
         $scope.isCollapsed = true;

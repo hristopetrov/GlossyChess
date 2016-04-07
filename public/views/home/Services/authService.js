@@ -1,4 +1,4 @@
-app.factory('auth_service',function($http, $q, $cookies, identity_service){
+chessApp.factory('authService',function($http, $q, identityService){
 
     var TOKEN_KEY = 'authentication'; // cookie key
 
@@ -19,26 +19,27 @@ app.factory('auth_service',function($http, $q, $cookies, identity_service){
     var login = function login(user) {
         var deferred = $q.defer();
 
-        var data = "grant_type=password&username=" + (user.username || '') + '&password=' + (user.password || '');
+        var data = user//"grant_type=password&username=" + (user.username || '') + '&password=' + (user.password || '');
         // data - formata v koito survura o4akva dannite
 
 
-        $http.post('/Token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } })
+        $http.post('/api/user/login', data)
             .success(function (response) {
-                var tokenValue = response.access_token;  // tokena koito mi vru6ta api-to
-
+                var tokenValue = response.api_token;  // tokena koito mi vru6ta api-to
+                console.log(response);
                 var theBigDay = new Date();
                 theBigDay.setHours(theBigDay.getHours() + 72);
 
-                $cookies.put(TOKEN_KEY, tokenValue, { expires: theBigDay });
+                //window.localStorage.setItem('currentUser', tokenValue);
+                window.localStorage.setItem('currentUser', JSON.stringify(response));
                 // save cookie
 
                 $http.defaults.headers.common.Authorization = 'Bearer ' + tokenValue;
                 // slagam ob6t header koito vseki put se izpra6ta
 
-                getIdentity().then(function () {   // tuk vzimam sus zaqvka user-a
+               /* getIdentity().then(function () {   // tuk vzimam sus zaqvka user-a
                     deferred.resolve(response);
-                });
+                });*/
             })
             .error(function (err) {
                 deferred.reject(err);
@@ -47,7 +48,7 @@ app.factory('auth_service',function($http, $q, $cookies, identity_service){
         return deferred.promise;
     };
 
-    var getIdentity = function () {
+   /* var getIdentity = function () {
         var deferred = $q.defer();
 
         $http.get('/api/users/identity')
@@ -57,20 +58,20 @@ app.factory('auth_service',function($http, $q, $cookies, identity_service){
             });
 
         return deferred.promise;
-    };
+    };*/
 
 
     return {
         register: register, // tuk se podava user
         login: login,
-        getIdentity: getIdentity,
+       // getIdentity: getIdentity,
         isAuthenticated: function () {
-            return !!$cookies.get(TOKEN_KEY);
+            return !!window.localStorage.getItem('currentUser');
         },
         logout: function () {
-            $cookies.remove(TOKEN_KEY);   // iztrivame cookie - to
+            window.localStorage.removeItem('currentUser');   // iztrivame cookie - to
             $http.defaults.headers.common.Authorization = null; // iztrivame header-a
-            identity_service.removeUser(); // currentUser = {};
+            identityService.removeUser(); // currentUser = {};
         }
     };
 

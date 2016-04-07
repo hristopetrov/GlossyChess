@@ -1,5 +1,6 @@
 angular.module('chessApp')
-    .controller('RegistrationController', ['$scope', '$uibModalInstance', '$window', 'usersService', function ($scope, $uibModalInstance, $window, usersService) {
+    .controller('RegistrationController', ['$scope', '$uibModalInstance', '$window', 'authService', 'identityService',
+        function ($scope, $uibModalInstance, $window, authService, identityService) {
         $scope.registrationMessage = '';
         $scope.registrationEnd = false;
         $scope.user = {};
