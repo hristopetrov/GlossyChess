@@ -106,16 +106,35 @@ var Figure = (function () {
         for (var i = 0; i < activeCells.length; i++) {
 
             function moveFigure() {
+                console.log(this.activeCell.getFigure());
+              /*  for(var k = 0; k < this.activeCells.length; k++){
 
+                    (function(currActiveCell){
+                        if(currActiveCell.getFigure() !== null){
+                            console.log('maikati1');
+                            var figureImage = currActiveCell.getFigure().getImage();
+                            figureImage.inputEnabled = true;
+
+                            figureImage.events.onInputDown.add(function(){console.log('maikati2')}, this);
+                        }
+                    })(this.activeCells[k])
+
+                }*/
                 console.log('Clicked!');
-                /*if (activeCell.getFigure() != null) {
-                 $(".my-taken-figures").append(activeCell.getFigure().getDom());
-                 activeCell.getDom().html(self.getDom());
-                 }*/
+
+                if (this.activeCell.getFigure() !== null) {
+                    console.log('babati');
+                    var figureImage = this.activeCell.getFigure().getImage();
+                    figureImage.events.onInputDown.add(function(){console.log('maikati');}, this);
+
+                }
 
                 var image = this.currentFigure.getImage();
                 var animation = game.add.tween(image);
-                animation.to({x: this.activeCell.getImage().x, y: this.activeCell.getImage().y}, 1500, Phaser.Easing.Linear.In, true);
+                animation.to({
+                    x: this.activeCell.getImage().x,
+                    y: this.activeCell.getImage().y
+                }, 1500, Phaser.Easing.Linear.In, true);
                 animation.start();
                 this.activeCell.setFigure(this.currentFigure);
                 this.currentFigure.setCell(this.activeCell);
@@ -136,21 +155,26 @@ var Figure = (function () {
             }
 
             (function (activeCell) {
-                activeCell.getImage().events.onInputDown.add( moveFigure, {activeCell: activeCell, currentCell: currentCell, activeCells: activeCells, currentFigure: self});
+                activeCell.getImage().events.onInputDown.add(moveFigure, {
+                    activeCell: activeCell,
+                    currentCell: currentCell,
+                    activeCells: activeCells,
+                    currentFigure: self
+                });
             })(activeCells[i])
 
         }
         /*if (activeCells.length > 0) {
-            game.events.onInputDown(function (target) {
-                if (target.name === 'board' ) {
-                   for(var i = 0; i < activeCells.length; i++){
-                       activeCells[i].visible = false;
-                   }
-                }
+         game.events.onInputDown(function (target) {
+         if (target.name === 'board' ) {
+         for(var i = 0; i < activeCells.length; i++){
+         activeCells[i].visible = false;
+         }
+         }
 
-                activeCells = [];
-            });
-        }*/
+         activeCells = [];
+         });
+         }*/
     }
 
     return Figure;

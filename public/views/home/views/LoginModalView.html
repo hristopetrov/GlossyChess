@@ -8,8 +8,7 @@
             <div class="forms">
 
                 <div class="form-container">
-                    <h3 ng-class="{'alert': true, 'alert-danger': true, hidden: !loginError}">Username or password is
-                        invalid</h3>
+                    <h3 ng-class="{'alert': true, 'alert-danger': true, hidden: !loginError}">{{errorMessage}}</h3>
 
                     <form role="form" name="loginForm" class="log-in-form" action="" method="post" novalidate
                           onsubmit="return false;">

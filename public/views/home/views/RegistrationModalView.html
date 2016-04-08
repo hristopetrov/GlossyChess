@@ -6,7 +6,8 @@
     <div class="forms">
 
         <div class="form-container">
-            <h3 ng-class="{'alert': true, 'alert-danger': true, hidden: !registrationEnd}">{{registrationMessage}}</h3>
+            <h3 ng-class="{'alert': true, 'alert-danger': true, hidden: !registrationEnd && success}">{{message}}</h3>
+            <h3 ng-class="{'alert': true, 'alert-success': true, hidden: !registrationEnd && !success}" >{{message}}</h3>
 
             <form role="form" name="registerForm" class="register-form" action="" method="post" novalidate onsubmit="return false;">
                 <div class="form-group" ng-class="{ 'has-error' : registerForm.email.$invalid && !registerForm.email.$pristine }">
@@ -31,12 +32,12 @@
                     <span class="help-block" ng-show="registerForm.password.$error.required && !registerForm.password.$pristine">Password must be at max 8 symbols</span>
                 </div>
 
-                <div ng-class="{'form-group' : true, 'has-error': registerForm.repeatPassword.$invalid && !registerForm.repeatPassword.$pristine}">
+                <div ng-class="{'form-group' : true, 'has-error': registerForm.password_confirmation.$invalid && !registerForm.password_confirmation.$pristine}">
                     <label class="control-label">Repeat password:</label>
-                    <input class="form-control" type="password" name="repeatPassword"  ng-model="user.repeatPassword" minlength="4" maxlength="8"  required compare-to="registerForm.password" pw-check="password">
-                    <span class="help-block" ng-show="registerForm.repeatPassword.$invalid && !registerForm.repeatPassword.$pristine">Password must be at least 4 symbols</span>
-                    <span class="help-block" ng-show="registerForm.repeatPassword.$error.required && !registerForm.repeatPassword.$pristine">Password must be at max 8 symbols</span>
-                    <span class="help-block" ng-show="registerForm.repeatPassword.$error.pw" >Passwords do not match!</span>
+                    <input class="form-control" type="password" name="password_confirmation"  ng-model="user.password_confirmation" minlength="4" maxlength="8"  required compare-to="registerForm.password" pw-check="password">
+                    <span class="help-block" ng-show="registerForm.password_confirmation.$invalid && !registerForm.password_confirmation.$pristine">Password must be at least 4 symbols</span>
+                    <span class="help-block" ng-show="registerForm.password_confirmation.$error.required && !registerForm.password_confirmation.$pristine">Password must be at max 8 symbols</span>
+                    <span class="help-block" ng-show="registerForm.password_confirmation.$error.pw" >Passwords do not match!</span>
                 </div>
             </form>
         </div>
@@ -44,7 +45,7 @@
 </div>
 
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="ok(user)" ng-disabled="!loginForm.$valid">Submit</button>
+    <button class="btn btn-primary" type="button" ng-click="ok(user)" ng-disabled="!registerForm.$valid">Submit</button>
     <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
 </div>
 </div>

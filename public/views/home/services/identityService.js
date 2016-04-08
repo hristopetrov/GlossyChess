@@ -1,23 +1,12 @@
 chessApp.factory('identityService',function($http, $q){
     var currentUser = {};
-    //var currentUser = {
-    //    name:'Drasho',
-    //    money: 5000,
-    //    rank: 5,
-    //    level: 10,
-    //    picture: 5,
-    //    bestScore: 2405,
-    //    experience: '248/1000',
-    //    email: 'drashoo@abv.bg',
-    //    games: 15
-    //};
 
     var deferred = $q.defer();
 
     return {
         getUser: function () {
             if (this.isAuthenticated()) {
-                return $q.resolve(currentUser);  
+                deferred.resolve(currentUser);
             }
 
             return deferred.promise;
@@ -29,9 +18,10 @@ chessApp.factory('identityService',function($http, $q){
             currentUser = user;
             deferred.resolve(user);
         },
-        removeUser: function () {
+        removeUser: function (response) {
             currentUser = {};
             deferred = $q.defer();
+
         }
     }
 

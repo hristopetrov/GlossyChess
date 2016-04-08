@@ -8,18 +8,21 @@ chessApp.factory('authService',function($http, $q, identityService){
 
         var deferred = $q.defer();
 
-        $http.post('/api/account/register', user)
-            .then(function(){
-                deferred.resolve(true);
-            },function(err){
+        $http.post('/api/user/register', user)
+            .success(function(response){
+                deferred.resolve(response);
+            })
+            .error(function(err){
                 deferred.reject(err)
             })
+
+        return deferred.promise;
     };
 
     var login = function login(user) {
         var deferred = $q.defer();
 
-        var data = user//"grant_type=password&username=" + (user.username || '') + '&password=' + (user.password || '');
+        var data = user ;//"grant_type=password&username=" + (user.username || '') + '&password=' + (user.password || '');
         // data - formata v koito survura o4akva dannite
 
 
@@ -36,10 +39,8 @@ chessApp.factory('authService',function($http, $q, identityService){
 
                 $http.defaults.headers.common.Authorization = 'Bearer ' + tokenValue;
                 // slagam ob6t header koito vseki put se izpra6ta
+                deferred.resolve(data);
 
-               /* getIdentity().then(function () {   // tuk vzimam sus zaqvka user-a
-                    deferred.resolve(response);
-                });*/
             })
             .error(function (err) {
                 deferred.reject(err);
@@ -48,23 +49,11 @@ chessApp.factory('authService',function($http, $q, identityService){
         return deferred.promise;
     };
 
-   /* var getIdentity = function () {
-        var deferred = $q.defer();
-
-        $http.get('/api/users/identity')
-            .success(function (identityResponse) {
-                identity_service.setUser(identityResponse); // vzimame vsi4kite danni za user-a
-                deferred.resolve(identityResponse);
-            });
-
-        return deferred.promise;
-    };*/
 
 
     return {
         register: register, // tuk se podava user
         login: login,
-       // getIdentity: getIdentity,
         isAuthenticated: function () {
             return !!window.localStorage.getItem('currentUser');
         },
