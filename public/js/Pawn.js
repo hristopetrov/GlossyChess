@@ -1,8 +1,8 @@
 var Pawn = (function (parent) {
 
-    function Pawn(game, cell, chessCoordinates, image, isOpposite) {
+    function Pawn(game, cell, chessCoordinates, image, isOpposite, font) {
 
-        Figure.call(this, game, cell, chessCoordinates, image, isOpposite);
+        Figure.call(this, game, cell, chessCoordinates, image, isOpposite, font);
     }
         Pawn.prototype = Object.create(Figure.prototype);
         Pawn.prototype.constructor = Pawn;

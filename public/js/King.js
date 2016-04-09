@@ -1,8 +1,8 @@
 var King = (function (parent) {
 
-    function King(game, cell, chessCoordinates, image, isOpposite) {
+    function King(game, cell, chessCoordinates, image, isOpposite, font) {
 
-        parent.call(this, game, cell, chessCoordinates, image, isOpposite);
+        parent.call(this, game, cell, chessCoordinates, image, isOpposite, font);
 
     }
 

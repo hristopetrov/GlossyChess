@@ -1,8 +1,8 @@
 var Queen = (function (parent) {
 
-    function Queen(game, cell, chessCoordinates, image, isOpposite) {
+    function Queen(game, cell, chessCoordinates, image, isOpposite, font) {
 
-        parent.call(this, game, cell, chessCoordinates, image, isOpposite);
+        parent.call(this, game, cell, chessCoordinates, image, isOpposite, font);
 
 
     }

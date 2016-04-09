@@ -1,8 +1,8 @@
 var Rook = (function (parent) {
    
-    function Rook(game, cell, chessCoordinates, image, isOpposite){
+    function Rook(game, cell, chessCoordinates, image, isOpposite, font){
 
-        parent.call(this, game, cell, chessCoordinates, image, isOpposite);
+        parent.call(this, game, cell, chessCoordinates, image, isOpposite, font);
         
     }
 

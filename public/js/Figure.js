@@ -1,7 +1,7 @@
 var Figure = (function () {
     var self = this;
 
-    function Figure(game, cell, chessCoordinates, image, isOpposite) {
+    function Figure(game, cell, chessCoordinates, image, isOpposite, font) {
 
         if (typeof this.constructor === 'Figure') {
             throw new Error('You cannot create instance of Figure!');
@@ -18,6 +18,8 @@ var Figure = (function () {
         var _activeCells = [];
 
         var _isOpposite = isOpposite;
+
+        var _font = font;
 
         this.getIsOpposite = function () {
             return _isOpposite;
@@ -68,6 +70,14 @@ var Figure = (function () {
             _activeCells = activeCells;
         }
 
+        this.getFont = function () {
+            return _font;
+        }
+
+        this.setFont = function (font) {
+            _font = font;
+        }
+
     }
 
 
@@ -106,27 +116,9 @@ var Figure = (function () {
         for (var i = 0; i < activeCells.length; i++) {
 
             function moveFigure() {
-                console.log(this.activeCell.getFigure());
-              /*  for(var k = 0; k < this.activeCells.length; k++){
-
-                    (function(currActiveCell){
-                        if(currActiveCell.getFigure() !== null){
-                            console.log('maikati1');
-                            var figureImage = currActiveCell.getFigure().getImage();
-                            figureImage.inputEnabled = true;
-
-                            figureImage.events.onInputDown.add(function(){console.log('maikati2')}, this);
-                        }
-                    })(this.activeCells[k])
-
-                }*/
-                console.log('Clicked!');
-
                 if (this.activeCell.getFigure() !== null) {
-                    console.log('babati');
-                    var figureImage = this.activeCell.getFigure().getImage();
-                    figureImage.events.onInputDown.add(function(){console.log('maikati');}, this);
-
+                    this.activeCell.getFigure().getImage().destroy();
+                    document.getElementById('my-taken-figures').innerHTML = this.activeCell.getFigure().getFont();
                 }
 
                 var image = this.currentFigure.getImage();
@@ -150,31 +142,35 @@ var Figure = (function () {
                 console.log('move: ' + moveCharcode);
                 //send to server
 
-                //conn.send(self.makeMirrorMove(moveCharcode));
+                conn.send(self.makeMirrorMove(moveCharcode));
 
             }
 
             (function (activeCell) {
+                activeCell.getImage().input.priorityID = 5;
+
                 activeCell.getImage().events.onInputDown.add(moveFigure, {
                     activeCell: activeCell,
                     currentCell: currentCell,
                     activeCells: activeCells,
                     currentFigure: self
-                });
+                }, 6);
             })(activeCells[i])
 
         }
-        /*if (activeCells.length > 0) {
-         game.events.onInputDown(function (target) {
-         if (target.name === 'board' ) {
-         for(var i = 0; i < activeCells.length; i++){
-         activeCells[i].visible = false;
-         }
-         }
+        if (activeCells.length > 0) {
+            game.board.inputEnabled = true;
+            console.log(game.board);
+            game.board.events.onInputDown.add(function () {
+                console.log('im in');
+                for (var i = 0; i < activeCells.length; i++) {
+                    console.log('maikati');
+                    activeCells[i].getImage().visible = false;
+                }
 
-         activeCells = [];
-         });
-         }*/
+                activeCells = [];
+            });
+        }
     }
 
     return Figure;

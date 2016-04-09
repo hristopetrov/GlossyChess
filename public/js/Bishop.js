@@ -2,9 +2,9 @@ var Bishop = (function (parent) {
 
     'use strict';
 
-    function Bishop(game, cell, chessCoordinates, image, isOpposite) {
+    function Bishop(game, cell, chessCoordinates, image, isOpposite, font) {
 
-        parent.call(this, game, cell, chessCoordinates, image, isOpposite);
+        parent.call(this, game, cell, chessCoordinates, image, isOpposite, font);
 
     }
 
