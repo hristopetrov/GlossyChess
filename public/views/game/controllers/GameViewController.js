@@ -1,15 +1,16 @@
 angular.module('chessApp')
-    .controller('GameViewController', ['$scope', '$rootScope', 'socket', function ($scope, $rootScope, socket) {
+    .controller('GameViewController', ['$scope', '$rootScope',  function ($scope, $rootScope) {
+        var connection = new WebSocket('ws://localhost:8088');
         $scope.takenFigures = '';
         $scope.user = $rootScope.user;
-        chessGame.init();
+        chessGame.init(connection);
 
-        var conn = new WebSocket('ws://localhost:8088');
-        conn.onopen = function (e) {
+
+        connection.onopen = function (e) {
             console.log("Connection established!");
         };
 
-        conn.onmessage = function (e) {
+        connection.onmessage = function (e) {
             chessGame.updateFigurePosition(e.data);
         };
     }]);

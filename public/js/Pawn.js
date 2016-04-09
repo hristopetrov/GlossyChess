@@ -8,7 +8,7 @@ var Pawn = (function (parent) {
         Pawn.prototype.constructor = Pawn;
 
         Pawn.prototype.readyToMove = function (game) {
-
+            console.log(game);
             var cell = this.getCell();
             var position = cell.getCoordinates();
             var horizontal = position.charAt(1);
@@ -18,7 +18,6 @@ var Pawn = (function (parent) {
             console.log(inForwardLeft);
             console.log(inForwardRight);
             var activeCells = [];
-            //debugger;
             if (game.cellAt(vertical + (parseInt(horizontal) + 1)).getFigure() == null) {
                 activeCells.push(game.cellAt(vertical + (parseInt(horizontal) + 1)));
                 if (horizontal === '2' && game.cellAt(vertical + (parseInt(horizontal) + 2)).getFigure() == null) {

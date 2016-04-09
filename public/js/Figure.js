@@ -108,7 +108,7 @@ var Figure = (function () {
         return mirrorMove;
     }
 
-    Figure.prototype.move = function (game) {
+    Figure.prototype.move = function (game, cells, connection) {
         var currentPosition = this.getCell().getCoordinates();
         var activeCells = this.getActiveCells();
         var self = this;
@@ -138,11 +138,18 @@ var Figure = (function () {
                     this.activeCells[j].getImage().events.onInputDown.dispose();
                 }
 
-                var moveCharcode = this.currentCell.getCoordinates() + ' ' + this.activeCell.getCoordinates();
-                console.log('move: ' + moveCharcode);
-                //send to server
+                var mattResponse = matt(self, cells, game);
 
-                conn.send(self.makeMirrorMove(moveCharcode));
+                console.log(mattResponse);
+
+                var moveCharcode = this.currentCell.getCoordinates() + ' ' + this.activeCell.getCoordinates();
+                //send to server
+                var serverInfo = {
+                    "mattRespose": mattResponse,
+                    "moveCharcode": self.makeMirrorMove(moveCharcode)
+                }
+
+                connection.send(serverInfo);
 
             }
 
@@ -160,17 +167,64 @@ var Figure = (function () {
         }
         if (activeCells.length > 0) {
             game.board.inputEnabled = true;
-            console.log(game.board);
             game.board.events.onInputDown.add(function () {
                 console.log('im in');
                 for (var i = 0; i < activeCells.length; i++) {
-                    console.log('maikati');
                     activeCells[i].getImage().visible = false;
                 }
 
                 activeCells = [];
             });
         }
+    }
+
+    function matt(figure, cells, game){
+        console.log(figure);
+        figure.readyToMove(game);
+        var futureActiveCells = figure.getActiveCells();
+        console.log(futureActiveCells);
+        for(var i = 0; i < futureActiveCells.length; i++){
+            futureActiveCells[i].getImage().visible = false;
+        }
+        var chess = false;
+        var matt = false;
+        var kingActiveCells = [];
+        var collisionAllActiveKingCells = true;
+        for(var i = 0; i < futureActiveCells.length; i++){
+            (function(futureActiveCell){
+                if(futureActiveCell.getFigure() instanceof King){
+                    kingActiveCells = futureActiveCell.getFigure().readyToMove(game);
+                    var kingCell = futureActiveCell;
+                    chess = true;
+                   // break;
+                }
+            }(futureActiveCells[i]))
+            if(chess == true){
+                break;
+            }
+        }
+        for(var i = 0; i < 8; i++){
+            for(var j = 0; j < 8; j++){
+                if(cells[i][j].getFigure() !== null && !cells[i][j].getFigure().getIsOpposite()){
+                    var currentFigure = cells[i][j].getFigure();
+                    currentFigure.readyToMove(game);
+                    var currentFigureActiveCells = currentFigure.getActiveCells();
+                    for(var k = 0; k < currentFigureActiveCells.length; k++){
+                        for(var l = 0; l < kingActiveCells.length; l++){
+                            if(currentFigureActiveCells[k].getCoordinates() !== kingActiveCells[l].getCoordinates()){
+                                collisionAllActiveKingCells = false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return {
+            'chess': chess,
+            'matt': collisionAllActiveKingCells
+        }
+
     }
 
     return Figure;

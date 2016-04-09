@@ -4,7 +4,7 @@ var chessGame = (function () {
     //this.game = null;
     var self = this;
 
-    function init() {
+    function init(connection) {
         self.game = new Phaser.Game(700, 700, Phaser.AUTO, 'myCanvas', {preload: preload, create: create});
 
         function preload() {
@@ -162,13 +162,9 @@ var chessGame = (function () {
 
         //console.log(cells);
 
-        function initializeFigures() {
-            //console.log('initializeFigures', cells);
-            //var self = this.game;
-            console.log(self.game);
+        function initializeFigures(connection) {
             for (var i = 0; i < CELL_ROWS; i++) {
                 for (var j = 0; j < CELL_ROWS; j++) {
-                    //var index = cells[i][j].getCoordinates();
                     var cell = cells[i][j];
 
                     (function (cell) {
@@ -176,7 +172,7 @@ var chessGame = (function () {
                             var figureImage = cell.getFigure().getImage();
                             figureImage.events.onInputDown.add(function () {
                                 this.currentFigure.readyToMove(self.game);
-                                this.currentFigure.move(self.game);
+                                this.currentFigure.move(self.game, cells, connection);
 
                             }, {currentFigure: cell.getFigure()})
 
@@ -189,33 +185,35 @@ var chessGame = (function () {
 
 
     }
-    self.updateFigurePosition = function(charCode){
+
+    self.updateFigurePosition = function (response) {
+        console.log(response);
+        var charCode = response.moveCharcode;
         var oldPosition = charCode.split(' ')[0];
         var newPosition = charCode.split(' ')[1];
 
         var oldCell = self.game.cellAt(oldPosition);
         var newCell = self.game.cellAt(newPosition);
 
+        var currentFigure = oldCell.getFigure().getImage();
+
         if (newCell.getFigure() != null && !newCell.getFigure().getIsOpposite()) {
-            $(newCell.getDom()).empty().append(oldCell.getFigure().getDom());
-            $('.opposite-taken-figures').append(newCell.getFigure().getDom().clone());
-            newCell.setFigure(oldCell.getFigure());
-            oldCell.setFigure(null);
-            $(oldCell.getDom()).empty();
+            newCell.getFigure().getImage().destroy();
+            document.getElementById('opposite-taken-figures').innerHTML = newCell.getFigure().getFont();
 
             //update figures status here
         } else {
-            var image = this.currentFigure.getImage();
+            var image = oldCell.getImage();
             var animation = game.add.tween(image);
             animation.to({
-                x: this.activeCell.getImage().x,
-                y: this.activeCell.getImage().y
+                x: newCell.getImage().x,
+                y: newCell.getImage().y
             }, 1500, Phaser.Easing.Linear.In, true);
             animation.start();
-            this.activeCell.setFigure(this.currentFigure);
-            this.currentFigure.setCell(this.activeCell);
-            this.currentFigure.setActiveCells([]);
-            this.currentCell.setFigure(null);
+            newCell.setFigure(currentFigure);
+            currentFigure.setCell(newCell);
+            currentFigure.setActiveCells([]);
+            oldCell.setFigure(null);
 
         }
     }
