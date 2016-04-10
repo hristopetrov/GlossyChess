@@ -1,8 +1,8 @@
 var Queen = (function (parent) {
 
-    function Queen(game, cell, chessCoordinates, image, isOpposite) {
+    function Queen(game, cell, chessCoordinates, image, isOpposite, font) {
 
-        parent.call(this, game, cell, chessCoordinates, image, isOpposite);
+        parent.call(this, game, cell, chessCoordinates, image, isOpposite, font);
 
 
     }
@@ -20,11 +20,8 @@ var Queen = (function (parent) {
         var asciiCodeOfH = 'h'.charCodeAt(0);
         var activeCells = [];
 
-        console.log('i am in bishop.readyToMove');
-        //debugger;
         for (var i = parseInt(horizontal) + 1, k = verticalIndex - 1; i <= 8 && k >= asciiCodeOfA; i++, k--) {
             var currentCell = game.cellAt(String.fromCharCode(k) + (parseInt(i)));
-            console.log(i);
             if (currentCell.getFigure() === null /*|| (currentCell.getFigure() !== null && currentCell.getFigure().getIsOpposite())*/) {
                 activeCells.push(currentCell);
             }
@@ -80,7 +77,6 @@ var Queen = (function (parent) {
         }
 
         for (var i = parseInt(horizontal) - 1; i > 0; i--) {
-            console.log(vertical + i);
             if (game.cellAt(vertical + i).getFigure() == null /*|| board.cellAt(vertical + i).getFigure().getIsOpposite()*/) {
                 activeCells.push(game.cellAt(vertical + i));
             }
@@ -93,8 +89,6 @@ var Queen = (function (parent) {
             }
         }
         for (var i = parseInt(horizontal) + 1; i <= 8; i++) {
-            console.log(vertical + (i));
-            console.log(game.cellAt(vertical + (i)).getFigure());
             if (game.cellAt(vertical + (i)).getFigure() == null /*|| board.cellAt(vertical + (i)).getFigure().getIsOpposite()*/) {
                 activeCells.push(game.cellAt(vertical + i));
             }

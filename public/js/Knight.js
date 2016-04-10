@@ -1,8 +1,8 @@
 var Knight = (function (parent) {
 
-    function Knight(game, cell, chessCoordinates, image, isOpposite) {
+    function Knight(game, cell, chessCoordinates, image, isOpposite, font) {
 
-        parent.call(this, game, cell, chessCoordinates, image, isOpposite);
+        parent.call(this, game, cell, chessCoordinates, image, isOpposite, font);
 
     }
 
@@ -21,14 +21,12 @@ var Knight = (function (parent) {
 
 
         if (horizontal + 2 <= 8 && verticalIndex + 1 <= asciiCodeOfH) {
-            console.log(String.fromCharCode(verticalIndex + 1) + (horizontal + 2));
+           // console.log(String.fromCharCode(verticalIndex + 1) + (horizontal + 2));
             var currentCell = game.cellAt(String.fromCharCode(verticalIndex + 1) + (horizontal + 2));
-            console.log(currentCell);
             if (currentCell.getFigure() == null || (currentCell.getFigure() != null && currentCell.getFigure().getIsOpposite())) {
                 activeCells.push(currentCell);
             }
         }
-        console.log(verticalIndex - 1 >= asciiCodeOfA);
         if (horizontal + 2 <= 8 && verticalIndex - 1 >= asciiCodeOfA) {
             var currentCell = game.cellAt(String.fromCharCode(verticalIndex - 1) + (horizontal + 2));
             if (currentCell.getFigure() == null || (currentCell.getFigure() != null && currentCell.getFigure().getIsOpposite())) {
@@ -55,7 +53,7 @@ var Knight = (function (parent) {
             }
         }
         if(horizontal - 2 >= 1 && verticalIndex - 1 >= asciiCodeOfA){
-            console.log(String.fromCharCode(verticalIndex - 1) + (horizontal - 2));
+            //console.log(String.fromCharCode(verticalIndex - 1) + (horizontal - 2));
             var currentCell = game.cellAt(String.fromCharCode(verticalIndex - 1) + (horizontal - 2));
             if(currentCell.getFigure() == null || (currentCell.getFigure() != null && currentCell.getFigure().getIsOpposite())){
                 activeCells.push(currentCell);
@@ -73,7 +71,6 @@ var Knight = (function (parent) {
                 activeCells.push(currentCell);
             }
         }
-        console.log(activeCells);
 
         for (var i = 0; i < activeCells.length; i++) {
             activeCells[i].getImage().visible = true;

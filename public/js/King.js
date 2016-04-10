@@ -1,8 +1,8 @@
 var King = (function (parent) {
 
-    function King(game, cell, chessCoordinates, image, isOpposite) {
+    function King(game, cell, chessCoordinates, image, isOpposite, font) {
 
-        parent.call(this, game, cell, chessCoordinates, image, isOpposite);
+        parent.call(this, game, cell, chessCoordinates, image, isOpposite, font);
 
     }
 
@@ -33,7 +33,7 @@ var King = (function (parent) {
             }
         }
         for(var i = verticalIndex - 1; i <= verticalIndex + 1 && i <= asciiCodeOfH && i >= asciiCodeOfA; i++){
-            console.log(board.cellAt(String.fromCharCode(i) + (horizontal - 1)));
+            //console.log(board.cellAt(String.fromCharCode(i) + (horizontal - 1)));
             if(horizontal - 1 > 0){
                 var currentCell = board.cellAt(String.fromCharCode(i) + (horizontal - 1));
                 if(currentCell.getFigure() == null || (currentCell.getFigure() !== null && currentCell.getFigure().getIsOpposite())){
@@ -42,16 +42,14 @@ var King = (function (parent) {
             }
         }
         for(var i = verticalIndex - 1; i <= verticalIndex + 1 && i <= asciiCodeOfH && i >= asciiCodeOfA; i++){
-            console.log(horizontal);
             if(horizontal + 1 < 9){
                 var currentCell = board.cellAt(String.fromCharCode(i) + (horizontal + 1));
-                console.log(currentCell.getCoordinates());
                 if(currentCell.getFigure() == null || (currentCell.getFigure() !== null && currentCell.getFigure().getIsOpposite())){
                     activeCells.push(currentCell);
                 }
             }
         }
-        console.log(activeCells);
+
         for (var i = 0; i < activeCells.length; i++) {
             activeCells[i].getImage().visible = true;
         }

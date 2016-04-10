@@ -142,3 +142,9 @@ table{
   margin: 15px;
   z-index: 2000;
 }
+
+#my-taken-figures,
+#opposite-taken-figures{
+  font-size: 1.5em;
+  color: $text-color;
+}

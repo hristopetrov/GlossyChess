@@ -2,9 +2,9 @@ var Bishop = (function (parent) {
 
     'use strict';
 
-    function Bishop(game, cell, chessCoordinates, image, isOpposite) {
+    function Bishop(game, cell, chessCoordinates, image, isOpposite, font) {
 
-        parent.call(this, game, cell, chessCoordinates, image, isOpposite);
+        parent.call(this, game, cell, chessCoordinates, image, isOpposite, font);
 
     }
 
@@ -21,11 +21,8 @@ var Bishop = (function (parent) {
         var asciiCodeOfH = 'h'.charCodeAt(0);
         var activeCells = [];
 
-        console.log('i am in bishop.readyToMove');
-        //debugger;
         for(var i = parseInt(horizontal) + 1, k = verticalIndex - 1; i <= 8 &&  k >= asciiCodeOfA; i++, k--){
             var currentCell = game.cellAt(String.fromCharCode(k) + (parseInt(i)));
-            console.log(i);
             if(currentCell.getFigure() === null /*|| (currentCell.getFigure() !== null && currentCell.getFigure().getIsOpposite())*/){
                 activeCells.push(currentCell);
             }

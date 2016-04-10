@@ -9,6 +9,7 @@ angular.module('chessApp')
                     .then(function success(response){
                         $rootScope.showMenu = true;
                         window.location.href = '#/profile';
+                        console.log(user);
                         $rootScope.user = user;
                         $uibModalInstance.close();
                     }, function error(response){

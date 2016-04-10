@@ -1,8 +1,8 @@
 var Rook = (function (parent) {
    
-    function Rook(game, cell, chessCoordinates, image, isOpposite){
+    function Rook(game, cell, chessCoordinates, image, isOpposite, font){
 
-        parent.call(this, game, cell, chessCoordinates, image, isOpposite);
+        parent.call(this, game, cell, chessCoordinates, image, isOpposite, font);
         
     }
 
@@ -18,11 +18,8 @@ var Rook = (function (parent) {
         var asciiCodeOfA = 'a'.charCodeAt(0);
         var asciiCodeOfH = 'h'.charCodeAt(0);
         var activeCells = [];
-        console.log('i am in rook');
         var i = parseInt(horizontal) - 1;
-        console.log(i);
         for(var i = parseInt(horizontal) - 1; i > 0; i--){
-            console.log(vertical + i);
             if(game.cellAt(vertical + i).getFigure() == null /*|| board.cellAt(vertical + i).getFigure().getIsOpposite()*/){
                 activeCells.push(game.cellAt(vertical + i));
             }
@@ -35,8 +32,6 @@ var Rook = (function (parent) {
             }
         }
         for(var i = parseInt(horizontal) + 1; i <= 8; i++){
-            console.log(vertical + (i));
-            console.log(game.cellAt(vertical + (i)).getFigure());
             if(game.cellAt(vertical + (i)).getFigure() == null /*|| board.cellAt(vertical + (i)).getFigure().getIsOpposite()*/){
                 activeCells.push(game.cellAt(vertical + i));
             }

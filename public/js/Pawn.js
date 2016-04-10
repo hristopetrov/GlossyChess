@@ -1,24 +1,22 @@
 var Pawn = (function (parent) {
 
-    function Pawn(game, cell, chessCoordinates, image, isOpposite) {
+    function Pawn(game, cell, chessCoordinates, image, isOpposite, font) {
 
-        Figure.call(this, game, cell, chessCoordinates, image, isOpposite);
+        Figure.call(this, game, cell, chessCoordinates, image, isOpposite, font);
     }
         Pawn.prototype = Object.create(Figure.prototype);
         Pawn.prototype.constructor = Pawn;
 
         Pawn.prototype.readyToMove = function (game) {
-
             var cell = this.getCell();
             var position = cell.getCoordinates();
             var horizontal = position.charAt(1);
             var vertical = position.charAt(0);
             var inForwardRight = String.fromCharCode(vertical.charCodeAt(0) + 1) + (parseInt(horizontal) + 1);
             var inForwardLeft = String.fromCharCode(vertical.charCodeAt(0) - 1) + (parseInt(horizontal) + 1);
-            console.log(inForwardLeft);
-            console.log(inForwardRight);
+            /*console.log(inForwardLeft);
+            console.log(inForwardRight);*/
             var activeCells = [];
-            //debugger;
             if (game.cellAt(vertical + (parseInt(horizontal) + 1)).getFigure() == null) {
                 activeCells.push(game.cellAt(vertical + (parseInt(horizontal) + 1)));
                 if (horizontal === '2' && game.cellAt(vertical + (parseInt(horizontal) + 2)).getFigure() == null) {
