@@ -7,20 +7,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 class UserController extends Controller
 {
-    public function login(Request $request)
-    {
-        $this->validate($request,[
-            'email' => 'required|email',
-            'password' => 'min:4|max:8'
-        ]);
-        $email = $request->input('email');
-        $password = $request->input('password');
-        if(Auth::attempt(['email' => $email, 'password' => $password])){
-            return Auth::user();
-        } else {
-            return response(['error' => 'There is no such user.'], 404);
-        }
-    }
 
     public function register(Request $request)
     {
@@ -39,6 +25,42 @@ class UserController extends Controller
         $user->save();
 
         return $user;
+    }
+
+    public function login(Request $request)
+    {
+        $this->validate($request,[
+            'email' => 'required|email',
+            'password' => 'min:4|max:8'
+        ]);
+        $email = $request->input('email');
+        $password = $request->input('password');
+        if(Auth::attempt(['email' => $email, 'password' => $password])){
+            $user = Auth::user();
+            $user->update(['status' => true]);
+            return $user;
+        } else {
+            return response(['error' => 'There is no such user.'], 404);
+        }
+    }
+
+    public function activeUsers()
+    {
+        $users = User::where('status', '=', 1);
+        return $users;
+    }
+
+    public function update(Requests $requests,$id)
+    {
+        $user = User::where('id', '=', $id);
+        $user->update($requests);
+    }
+
+    public function logout($id)
+    {
+        $user = User::findOrFail($id);
+        $user->update(['status' => false]);
+        return redirect('/');
     }
 
 }

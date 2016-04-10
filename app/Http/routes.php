@@ -26,4 +26,7 @@ Route::group(['prefix' => 'api'],function(){
     Route::auth();
     Route::post('/user/register', 'UserController@register');
     Route::post('/user/login', 'UserController@login');
+    Route::post('/user/logout', 'UserController@logout');
+    Route::put('/user/{id}', 'UserController@update');  //update user info
+    Route::get('/profile','UserController@activeUsers');
 });
