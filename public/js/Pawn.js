@@ -8,15 +8,14 @@ var Pawn = (function (parent) {
         Pawn.prototype.constructor = Pawn;
 
         Pawn.prototype.readyToMove = function (game) {
-            console.log(game);
             var cell = this.getCell();
             var position = cell.getCoordinates();
             var horizontal = position.charAt(1);
             var vertical = position.charAt(0);
             var inForwardRight = String.fromCharCode(vertical.charCodeAt(0) + 1) + (parseInt(horizontal) + 1);
             var inForwardLeft = String.fromCharCode(vertical.charCodeAt(0) - 1) + (parseInt(horizontal) + 1);
-            console.log(inForwardLeft);
-            console.log(inForwardRight);
+            /*console.log(inForwardLeft);
+            console.log(inForwardRight);*/
             var activeCells = [];
             if (game.cellAt(vertical + (parseInt(horizontal) + 1)).getFigure() == null) {
                 activeCells.push(game.cellAt(vertical + (parseInt(horizontal) + 1)));

@@ -131,6 +131,7 @@ var Figure = (function () {
                 this.activeCell.setFigure(this.currentFigure);
                 this.currentFigure.setCell(this.activeCell);
                 this.currentFigure.setActiveCells([]);
+                this.currentFigure.setCoordinates(this.activeCell.getCoordinates());
                 this.currentCell.setFigure(null);
 
                 for (var j = 0; j < this.activeCells.length; j++) {
@@ -149,7 +150,9 @@ var Figure = (function () {
                     "moveCharcode": self.makeMirrorMove(moveCharcode)
                 }
 
-                connection.send(serverInfo);
+                console.log('connection in move: ', connection);
+
+                connection.send(JSON.stringify(serverInfo));
 
             }
 
@@ -168,7 +171,6 @@ var Figure = (function () {
         if (activeCells.length > 0) {
             game.board.inputEnabled = true;
             game.board.events.onInputDown.add(function () {
-                console.log('im in');
                 for (var i = 0; i < activeCells.length; i++) {
                     activeCells[i].getImage().visible = false;
                 }
@@ -178,11 +180,55 @@ var Figure = (function () {
         }
     }
 
+    function oppositeKingActiveCells(king, game){
+        var cell = king.getCell();
+        var position = cell.getCoordinates();
+        var horizontal = parseInt(position.charAt(1));
+        var vertical = position.charAt(0);
+        var verticalIndex = vertical.charCodeAt(0);
+        var asciiCodeOfA = 'a'.charCodeAt(0);
+        var asciiCodeOfH = 'h'.charCodeAt(0);
+        var activeCells = [];
+        //console.log(board.cellAt(String.fromCharCode(verticalIndex - 1) + horizontal));
+        if(verticalIndex + 1 <= asciiCodeOfH){
+            var currentCell = game.cellAt(String.fromCharCode(verticalIndex + 1) + horizontal);
+            if(currentCell.getFigure() == null || (currentCell.getFigure() !== null && !currentCell.getFigure().getIsOpposite())){
+                activeCells.push(currentCell);
+            }
+
+        }
+        if(verticalIndex - 1 >= asciiCodeOfA){
+            var currentCell = game.cellAt(String.fromCharCode(verticalIndex - 1) + horizontal);
+            if(currentCell.getFigure() == null || (currentCell.getFigure() !== null && !currentCell.getFigure().getIsOpposite())){
+                activeCells.push(currentCell);
+            }
+        }
+        for(var i = verticalIndex - 1; i <= verticalIndex + 1 && i <= asciiCodeOfH && i >= asciiCodeOfA; i++){
+            //console.log(board.cellAt(String.fromCharCode(i) + (horizontal - 1)));
+            if(horizontal - 1 > 0){
+                var currentCell = game.cellAt(String.fromCharCode(i) + (horizontal - 1));
+                if(currentCell.getFigure() == null || (currentCell.getFigure() !== null && !currentCell.getFigure().getIsOpposite())){
+                    activeCells.push(currentCell);
+                }
+            }
+        }
+        for(var i = verticalIndex - 1; i <= verticalIndex + 1 && i <= asciiCodeOfH && i >= asciiCodeOfA; i++){
+            if(horizontal + 1 < 9){
+                var currentCell = game.cellAt(String.fromCharCode(i) + (horizontal + 1));
+                if(currentCell.getFigure() == null || (currentCell.getFigure() !== null && !currentCell.getFigure().getIsOpposite())){
+                    activeCells.push(currentCell);
+                }
+            }
+        }
+
+        return activeCells;
+
+    }
+
     function matt(figure, cells, game){
-        console.log(figure);
         figure.readyToMove(game);
         var futureActiveCells = figure.getActiveCells();
-        console.log(futureActiveCells);
+        //console.log(futureActiveCells);
         for(var i = 0; i < futureActiveCells.length; i++){
             futureActiveCells[i].getImage().visible = false;
         }
@@ -193,8 +239,13 @@ var Figure = (function () {
         for(var i = 0; i < futureActiveCells.length; i++){
             (function(futureActiveCell){
                 if(futureActiveCell.getFigure() instanceof King){
-                    kingActiveCells = futureActiveCell.getFigure().readyToMove(game);
+                    //futureActiveCell.getFigure().readyToMove(game);
+                    kingActiveCells = oppositeKingActiveCells(futureActiveCell.getFigure(), game);
+                   /* for(var j = 0; j < kingActiveCells.length; j++){
+                        kingActiveCells[j].getImage().visible = false;
+                    }*/
                     var kingCell = futureActiveCell;
+
                     chess = true;
                    // break;
                 }
@@ -203,16 +254,41 @@ var Figure = (function () {
                 break;
             }
         }
-        for(var i = 0; i < 8; i++){
-            for(var j = 0; j < 8; j++){
-                if(cells[i][j].getFigure() !== null && !cells[i][j].getFigure().getIsOpposite()){
-                    var currentFigure = cells[i][j].getFigure();
-                    currentFigure.readyToMove(game);
-                    var currentFigureActiveCells = currentFigure.getActiveCells();
-                    for(var k = 0; k < currentFigureActiveCells.length; k++){
-                        for(var l = 0; l < kingActiveCells.length; l++){
-                            if(currentFigureActiveCells[k].getCoordinates() !== kingActiveCells[l].getCoordinates()){
-                                collisionAllActiveKingCells = false;
+
+        console.log('figure coordinates', figure.getCoordinates());
+        if(chess == true){
+            for(var i = 0; i < kingActiveCells.length; i++){
+                if(kingActiveCells[i].getFigure() !== null){
+                    console.log('king active cell', kingActiveCells[i].getFigure().getCoordinates() );
+                    if(kingActiveCells[i].getFigure().getCoordinates() === figure.getCoordinates()){
+
+                        matt = true;
+                        break;
+                    };
+                }
+
+            }
+        }
+
+        //console.log(kingActiveCells);
+
+        if(matt == false){
+            for(var i = 0; i < 8; i++){
+                for(var j = 0; j < 8; j++){
+                    if(cells[i][j].getFigure() !== null && !cells[i][j].getFigure().getIsOpposite()){
+                        var currentFigure = cells[i][j].getFigure();
+                        currentFigure.readyToMove(game);
+                        var currentFigureActiveCells = currentFigure.getActiveCells();
+                        for(var z = 0; z < currentFigureActiveCells.length; z++){
+                            currentFigureActiveCells[z].getImage().visible = false;
+                        }
+                        for(var k = 0; k < currentFigureActiveCells.length; k++){
+
+                            for(var l = 0; l < kingActiveCells.length; l++){
+                               // console.log(currentFigureActiveCells[k].getCoordinates() !== kingActiveCells[l].getCoordinates());
+                                if(currentFigureActiveCells[k].getCoordinates() !== kingActiveCells[l].getCoordinates()){
+                                    collisionAllActiveKingCells = false;
+                                }
                             }
                         }
                     }
@@ -220,9 +296,12 @@ var Figure = (function () {
             }
         }
 
+
+        matt = kingActiveCells.length > 0 ? collisionAllActiveKingCells : false;
+
         return {
             'chess': chess,
-            'matt': collisionAllActiveKingCells
+            'matt': matt
         }
 
     }

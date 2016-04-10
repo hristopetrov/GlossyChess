@@ -5,7 +5,12 @@ var chessGame = (function () {
     var self = this;
 
     function init(connection) {
+        console.log('connection in int: ', connection);
+        var conn = connection;
         self.game = new Phaser.Game(700, 700, Phaser.AUTO, 'myCanvas', {preload: preload, create: create});
+
+        self.game.state.add('win', win);
+        self.game.state.add('lose', lose);
 
         function preload() {
             this.game.load.image('board', 'images/CHW31-2.gif');
@@ -140,7 +145,7 @@ var chessGame = (function () {
                 i++;
             }
             //cellAt('');
-            initializeFigures();
+            initializeFigures(connection);
             //console.log(cells);
         }
 
@@ -162,7 +167,8 @@ var chessGame = (function () {
 
         //console.log(cells);
 
-        function initializeFigures(connection) {
+        function initializeFigures(conn) {
+            console.log('initialize figures in gameController', conn);
             for (var i = 0; i < CELL_ROWS; i++) {
                 for (var j = 0; j < CELL_ROWS; j++) {
                     var cell = cells[i][j];
@@ -172,7 +178,7 @@ var chessGame = (function () {
                             var figureImage = cell.getFigure().getImage();
                             figureImage.events.onInputDown.add(function () {
                                 this.currentFigure.readyToMove(self.game);
-                                this.currentFigure.move(self.game, cells, connection);
+                                this.currentFigure.move(self.game, cells, conn);
 
                             }, {currentFigure: cell.getFigure()})
 
@@ -186,7 +192,7 @@ var chessGame = (function () {
 
     }
 
-    self.updateFigurePosition = function (response) {
+    function updateFigurePosition(response) {
         console.log(response);
         var charCode = response.moveCharcode;
         var oldPosition = charCode.split(' ')[0];
@@ -195,7 +201,8 @@ var chessGame = (function () {
         var oldCell = self.game.cellAt(oldPosition);
         var newCell = self.game.cellAt(newPosition);
 
-        var currentFigure = oldCell.getFigure().getImage();
+        var currentFigure = oldCell.getFigure();
+        var currentFigureImage = oldCell.getFigure().getImage();
 
         if (newCell.getFigure() != null && !newCell.getFigure().getIsOpposite()) {
             newCell.getFigure().getImage().destroy();
@@ -203,8 +210,8 @@ var chessGame = (function () {
 
             //update figures status here
         } else {
-            var image = oldCell.getImage();
-            var animation = game.add.tween(image);
+            //var image = oldCell.getImage();
+            var animation = game.add.tween(currentFigureImage);
             animation.to({
                 x: newCell.getImage().x,
                 y: newCell.getImage().y
@@ -219,7 +226,8 @@ var chessGame = (function () {
     }
 
     return {
-        init: init
+        init: init,
+        updateFigurePosition: updateFigurePosition
     }
 })
 ();
