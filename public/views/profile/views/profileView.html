@@ -1,7 +1,7 @@
 <div class="container profile col-sm-12" >
     <div class="row">
         <div class="pull-left col-md-4" id="profile-image">
-            <img ng-src="{{user.imageURL}}"/>
+            <img ng-src="{{image}}"/>
             <span id="edit"><a href="" ng-click="isCollapsed = !isCollapsed">Edit</a> </span>
             <div uib-collapse="isCollapsed">
                 <input type="file" name="image" ng-model="image"/>
@@ -24,11 +24,11 @@
         <div class="col-sm-4">
             <input type="text" class="form-control col-lg-4" id="searchActiveUsers" ng-model="query"/>
         </div>
-        <label class="col-sm-2 label-control">Sort by:</label>
+       <!-- <label class="col-sm-2 label-control">Sort by:</label>
         <select class="col-sm-4" ng-model="orderProp">
-            <option value="username">Alphabetical</option>
+            <option value="username" >Alphabetical</option>
             <option value="age">Rating</option>
-        </select>
+        </select>-->
         <table class="table">
             <tr>
                 <th>№</th>

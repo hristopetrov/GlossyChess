@@ -21,18 +21,40 @@
                     </span>
                 <a ng-click="logout()" id="logout">Logout</a>
             </div>
-            <span uib-dropdown on-toggle="toggled(open)">
+            <div id="notifications" class="pull-right">
+                 <span uib-dropdown on-toggle="toggled(open)" >
               <a href id="simple-dropdown" uib-dropdown-toggle>
-                  Notifications
+                  Notifications <span class="badge">0</span>
               </a>
-              <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
-                  <li ng-repeat="choice in items">
-
-                      <a href>{{choice}}</a>
-                  </li>
+              <ul class="dropdown-menu" id="notifications-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+                  <!--<li ng-repeat="users in notifications">
+                      <span>{{users.name}}</span>
+                      <button class="accept" ng-click="accept({{users.name}})" id="{{users.name}}">Accept</button>
+                      <button class="decline" ng-click="decline({{users.name}})" id="{{users.name}}">&times;</button>
+                  </li>-->
+                  <li>1</li>
+                  <li>2</li>
+                  <li>3</li>
+                  <li>4</li>
+                  <li>5</li>
               </ul>
             </span>
-        </div>
+
+            </div>
+
+          <!--  <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Action <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                </ul>
+            </div>
+        </div>-->
 
     </nav>
 

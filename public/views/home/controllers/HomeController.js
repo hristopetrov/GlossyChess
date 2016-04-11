@@ -1,6 +1,7 @@
 angular.module('chessApp')
     .controller('HomeController', function ($scope, $uibModal){
         $scope.animationsEnabled = true;
+        $scope.notifications = [];
 
         $scope.openLoginModal = function () {
 

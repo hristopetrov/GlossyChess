@@ -9,9 +9,6 @@ var chessGame = (function () {
         var conn = connection;
         self.game = new Phaser.Game(700, 700, Phaser.AUTO, 'myCanvas', {preload: preload, create: create});
 
-        self.game.state.add('win', win);
-        self.game.state.add('lose', lose);
-
         function preload() {
             this.game.load.image('board', 'images/CHW31-2.gif');
             this.game.load.image('bishop_black', 'images/bishop_black.png');

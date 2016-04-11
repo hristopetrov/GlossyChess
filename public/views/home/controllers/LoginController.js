@@ -9,7 +9,6 @@ angular.module('chessApp')
                     .then(function success(response){
                         $rootScope.showMenu = true;
                         window.location.href = '#/profile';
-                        console.log(user);
                         $rootScope.user = user;
                         $uibModalInstance.close();
                     }, function error(response){
@@ -34,9 +33,15 @@ angular.module('chessApp')
             }*/
 
             $rootScope.logout = function () {
-                $rootScope.showMenu = false;
-                authService.logout();
-                window.location.href = '#home';
+                console.log('logout');
+                authService.logout()
+                    .then(function success(){
+                        $rootScope.showMenu = false;
+                        window.location.href = '#home';
+                    }, function error(){
+                        console.error('Unsuccessful function execution!');
+                    });
+
             }
 
             $scope.ok = function () {
