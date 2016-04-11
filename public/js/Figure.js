@@ -146,8 +146,13 @@ var Figure = (function () {
                 var moveCharcode = this.currentCell.getCoordinates() + ' ' + this.activeCell.getCoordinates();
                 //send to server
                 var serverInfo = {
-                    "mattRespose": mattResponse,
+                    "mattResponse": mattResponse,
                     "moveCharcode": self.makeMirrorMove(moveCharcode)
+                }
+
+                if(mattResponse.matt){
+                    var text = game.add.text(game.world.centerX, game.world.centerY, 'You win!', { font: '64px Arial', fill: 'green' });
+                    text.anchor.set(0.5);
                 }
 
                 console.log('connection in move: ', connection);

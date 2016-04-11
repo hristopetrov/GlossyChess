@@ -2,7 +2,7 @@ angular.module('chessApp')
     .controller('ProfileInfoController', ['$scope', '$rootScope' , 'ProfileInfoService', function ($scope, $rootScope, ProfileInfoService) {
         $scope.user = JSON.parse(window.localStorage.getItem('currentUser'));
         console.log($scope.user);
-        $scope.image = $scope.user.imageURL;
+        //$scope.image = $scope.user.imageURL;
         $scope.score = $scope.user.score;
         $scope.numberOfPlayedGames = $scope.user.numberOfPlayedGames;
         $rootScope.showMenu = true;
@@ -14,6 +14,7 @@ angular.module('chessApp')
         $scope.activeUsersLength = $scope.activeUsers !== undefined ? $scope.activeUsers.length : 0;
         $scope.maxSize = 5;
         $scope.bigCurrentPage = 1;
+        $scope.challenges = getChallenges();
 
         $scope.saveImage = function (image) {
             //$http.post('../../api/users', {"username": $scope.username, "image": image}).then(...)
@@ -35,6 +36,17 @@ angular.module('chessApp')
 
         }
 
+        $scope.getChallenges = function(){
+            setInterval(function(){
+                ProfileInfoService.getNotifications()
+                    .then(function success(response){
+
+                    })
+
+
+            }, 1000)
+
+        }
 
 
     }])

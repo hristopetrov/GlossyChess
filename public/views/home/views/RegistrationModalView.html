@@ -6,7 +6,7 @@
     <div class="forms">
 
         <div class="form-container">
-            <h3 ng-class="{'alert': true, 'alert-danger': true, hidden: !registrationEnd && success}">{{message}}</h3>
+            <h3 ng-class="{'alert': true, 'alert-danger': true, hidden: !registrationEnd && !error && !success}">{{message}}</h3>
             <h3 ng-class="{'alert': true, 'alert-success': true, hidden: !registrationEnd && !success}" >{{message}}</h3>
 
             <form role="form" name="registerForm" class="register-form" action="" method="post" novalidate onsubmit="return false;">

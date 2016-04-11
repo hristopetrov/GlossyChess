@@ -21,15 +21,17 @@
                     </span>
                 <a ng-click="logout()" id="logout">Logout</a>
             </div>
-            <div class="dropdown pull-right" id="notifications">
-                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" id="notifications-button">
-                    <span class="badge">0</span>
-                    Notifications
-                    <span class="caret"></span></button>
-                <ul class="dropdown-menu" ng-repeat="y in challenges">
-                    <li>{{y.name}}<a href="" ng-click="accept()">Accept</a></li>
-                </ul>
-            </div>
+            <span uib-dropdown on-toggle="toggled(open)">
+              <a href id="simple-dropdown" uib-dropdown-toggle>
+                  Notifications
+              </a>
+              <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+                  <li ng-repeat="choice in items">
+
+                      <a href>{{choice}}</a>
+                  </li>
+              </ul>
+            </span>
         </div>
 
     </nav>
