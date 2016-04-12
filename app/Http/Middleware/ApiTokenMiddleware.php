@@ -15,7 +15,12 @@ class ApiTokenAuthMiddleware
     public function handle($request, Closure $next)
     {
         $token = $request->header('X-Api-Token');
+        if (!token){
+        	 $token = $request->input('api_token');	
+        }
+        
         if(!$token){
+     
             return response(['message' => 'Token required.'], 403);
         }
         $user = User::where('api_token', $token)->first();

@@ -30,5 +30,11 @@ Route::group(['prefix' => 'api'],function(){
     Route::post('/user/logout', 'UserController@logout');
     Route::put('/user/{id}', 'UserController@update');  //update user info
     Route::get('/profile','UserController@activeUsers');
-    Route::get('/freegames', 'GameController@index');
+    
+    Route::group(['middleware' => 'web'], function () {
+    	Route::get('/freegames', 'GameController@index');
+   		Route::get('/newgame', 'GameController@newGame');
+    	
+    });
 });
+

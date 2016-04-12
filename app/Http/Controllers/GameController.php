@@ -10,15 +10,14 @@ use App\Game;
 
 class GameController extends Controller
 {
-   public function addGame()
+   public function newGame()
    {
-   	
-   	
+	   	$user = Auth::user();
+	    return Game::create(['player1_id' => $user->id]);   	
    }
    
    public function index()
    {
-   	
    	 return Game::where('status', '=', '0')->with('playerOne','playerTwo')->get(); 
    }
 }
