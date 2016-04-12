@@ -30,9 +30,15 @@ angular.module('chessApp')
                                                     "gameid": gameID});
             },
 
-            getNotifications: function(gameID){
-                  return $http.get('api/checkgame/' + gameID, {"api_token" : this.getInfo().api_token,
-                                                                 "gameid": gameID});
+            getNotifications: function() {
+               var gameID = localStorage.getItem('gameID');
+                if(!gameID){
+                    return;
+                }
+
+                return $http.get('api/checkgame/' + gameID, {
+                    "api_token" : this.getInfo().api_token
+                })
             },
 
             accept: function(){
@@ -42,7 +48,7 @@ angular.module('chessApp')
             addGame: function(){
                 return $http({
                     method: 'GET',
-                    url:'api/freegames',
+                    url:'api/newgame',
                     data: {
                         "api_token" : this.getInfo().api_token
                     }

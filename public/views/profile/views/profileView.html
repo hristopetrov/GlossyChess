@@ -2,11 +2,11 @@
     <div class="row">
         <div class="col-md-4" id="profile-image">
             <img ng-src="{{image}}"/>
-            <span id="edit"><a href="" ng-click="isCollapsed = !isCollapsed">Edit</a> </span>
+            <!--span id="edit"><a href="" ng-click="isCollapsed = !isCollapsed">Edit</a> </span>
             <div uib-collapse="isCollapsed">
                 <input type="file" name="image" ng-model="image"/>
                 <button class="btn btn-default" ng-click="saveImage(image)">Submit</button>
-            </div>
+            </div>-->
         </div>
         <div class="col-md-7" id="user-information">
             <h2>Welcome, {{user.name}}!</h2>
@@ -17,6 +17,9 @@
                 <span class="label-info" ng-show="true">{{user.rating}} points/played games</span>
             </p>
         </div>
+    </div>
+    <div ng-show="notificationAlert" class="alert alert-success">
+        <a href="#/game/{{gameID}}" style="color: #000">Go to game</a>
     </div>
     <div id="active-users" class="clearfix col-md-12">
         <h3 id="acive-users-list">Active Users List:</h3>
