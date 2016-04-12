@@ -35,7 +35,7 @@ Route::group(['prefix' => 'api'],function(){
     	Route::get('/freegames', 'GameController@index');
    		Route::get('/newgame', 'GameController@newGame');
    		Route::get('/joingame', 'GameController@joinGame');
-    	
+    	Route::get('/checkgame/{id}', 'GameController@getGameStatus'); 
     });
 });
 
