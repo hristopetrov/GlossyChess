@@ -30,9 +30,9 @@ angular.module('chessApp')
                 })
         }
 
-        $scope.enterGame = function (user, gameID) {
-            ProfileInfoService.enterGame(user, gameID)
-                .then(function success(user, gameID){
+        $scope.enterGame = function (gameID) {
+            ProfileInfoService.enterGame( gameID)
+                .then(function success(gameID){
                     document.getElementById(gameID).disabled = true;
                     document.getElementById(gameID).innerHTML = 'Waiting...';
                 })
