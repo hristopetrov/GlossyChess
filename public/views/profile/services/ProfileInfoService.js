@@ -25,9 +25,9 @@ angular.module('chessApp')
                 });
             },
 
-            enterGame: function(user){
-                return $http.post('json/activeUsers.json', {"api_token": user.api_token,
-                                                            "gameid": gameid});
+            enterGame: function(user, gameID){
+                return $http.post('api/joingame', {"api_token": user.api_token,
+                                                            "gameid": gameID});
             },
 
             getNotifications: function(){
@@ -39,7 +39,13 @@ angular.module('chessApp')
             },
 
             addGame: function(){
-                return $http.get('api/newgame');
+                return $http({
+                    method: 'GET',
+                    url:'api/freegames',
+                    data: {
+                        "api_token" : user.api_token
+                    }
+                });
             }
 
         }

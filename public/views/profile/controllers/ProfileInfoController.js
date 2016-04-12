@@ -30,9 +30,12 @@ angular.module('chessApp')
                 })
         }
 
-        $scope.enterGame = function (user) {
-
-
+        $scope.enterGame = function (user, gameID) {
+            ProfileInfoService.enterGame(user, gameID)
+                .then(function success(user, gameID){
+                    document.getElementById(gameID).disabled = true;
+                    document.getElementById(gameID).innerHTML = 'Waiting...';
+                })
         }
 
      /*   $scope.getNotifications = function(){
