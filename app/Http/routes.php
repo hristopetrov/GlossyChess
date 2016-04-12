@@ -34,6 +34,7 @@ Route::group(['prefix' => 'api'],function(){
     Route::group(['middleware' => 'web'], function () {
     	Route::get('/freegames', 'GameController@index');
    		Route::get('/newgame', 'GameController@newGame');
+   		Route::get('/joingame', 'GameCotroller@joinGame');
     	
     });
 });
