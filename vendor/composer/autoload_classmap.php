@@ -7,12 +7,15 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'ActiveUsers' => $baseDir . '/database/migrations/2016_04_08_080104_active_users.php',
+    'AddAvatarCountPointsToUser' => $baseDir . '/database/migrations/2016_04_10_132928_add_avatar_count_points_to_user.php',
+    'AddStatusFieldToUser' => $baseDir . '/database/migrations/2016_04_10_124904_add_status_field_to_user.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',
     'File_Iterator_Facade' => $vendorDir . '/phpunit/php-file-iterator/src/Facade.php',
     'File_Iterator_Factory' => $vendorDir . '/phpunit/php-file-iterator/src/Factory.php',
+    'GameTableSeeder' => $baseDir . '/database/seeds/GameTableSeeder.php',
     'Games' => $baseDir . '/database/migrations/2016_04_03_124750_games.php',
     'Hamcrest\\Arrays\\IsArray' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Arrays/IsArray.php',
     'Hamcrest\\Arrays\\IsArrayContaining' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Arrays/IsArrayContaining.php',

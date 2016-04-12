@@ -14,10 +14,11 @@ class Games extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('pl1-id');
-            $table->integer('pl2-id');
+            $table->integer('player1_id');
+            $table->integer('player2_id');
             $table->integer('who_is_on_turn');
             $table->string('state_of_the_board');
+            $table->tinyinteger('status');
         });
     }
 
