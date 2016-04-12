@@ -30,8 +30,8 @@ angular.module('chessApp')
                                                     "gameid": gameID});
             },
 
-            getNotifications: function(){
-                  return $http.get('api/profile/notifications', {"api_token" : this.getInfo().api_token,
+            getNotifications: function(gameID){
+                  return $http.get('api/checkgame/' + gameID, {"api_token" : this.getInfo().api_token,
                                                                  "gameid": gameID});
             },
 

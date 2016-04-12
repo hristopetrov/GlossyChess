@@ -24,7 +24,7 @@
             <div id="notifications" class="pull-right">
                  <span uib-dropdown on-toggle="toggled(open)">
               <a href id="simple-dropdown" uib-dropdown-toggle>
-                  Notifications <span class="badge">0</span>
+                  Notifications <span class="badge">{{count}}</span>
               </a>
               <ul class="dropdown-menu" id="notifications-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
                   <!--<li ng-repeat="users in notifications">

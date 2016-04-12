@@ -13,8 +13,9 @@ angular.module('chessApp')
         $scope.activeGamesLength = $scope.activeGames !== undefined ? $scope.activeGames.length : 0;
         $scope.maxSize = 5;
         $scope.bigCurrentPage = 1;
-        $rootScope.challenges = [1, 2, 3, 4];
+        $rootScope.challenges = [];
         $scope.waiting = false;
+        $rootScope.count = 0;
 
         $scope.saveImage = function (image) {
             //$http.post('../../api/users', {"username": $scope.username, "image": image}).then(...)
@@ -41,12 +42,13 @@ angular.module('chessApp')
 
         }
 
-        $scope.getNotifications = function () {
+        $scope.getNotifications = function (gameID) {
             setInterval(function () {
-                ProfileInfoService.getNotifications()
+                ProfileInfoService.getNotifications(gameID)
                     .then(function success(response) {
                         if (response.data.length > 0) {
                             $rootScope.challenges = response.data;
+                            $rootScope.count++;
                         }
                     })
 
