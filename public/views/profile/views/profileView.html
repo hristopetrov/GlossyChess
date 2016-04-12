@@ -24,26 +24,22 @@
         <div class="col-sm-4">
             <input type="text" class="form-control col-lg-4" id="searchActiveUsers" ng-model="query"/>
         </div>
-       <!-- <label class="col-sm-2 label-control">Sort by:</label>
-        <select class="col-sm-4" ng-model="orderProp">
-            <option value="username" >Alphabetical</option>
-            <option value="age">Rating</option>
-        </select>-->
+       <label class="col-sm-2 label-control">Create game:</label>
+        <button  class="btn btn-default" ng-click="addRow()">Create</button>
         <table class="table">
             <tr>
                 <th>№</th>
-                <th>Username</th>
-                <th>Score</th>
-                <th>Rating</th>
+                <th>GameID</th>
+                <th>Player</th>
                 <th>Challenge</th>
             </tr>
-            <tr ng-repeat="x in activeUsers | filter:query | orderBy:orderProp">
+            <tr ng-repeat="x in activeGames | filter:query | orderBy:orderProp">
                 <td>{{$index + 1}}</td>
-                <td>{{x.name}}</td>
-                <td>{{x.score}}</td>
-                <td>{{x.rating}}</td>
+                <td>{{x.id}}</td>
+                <td>{{x.player_one.name}}</td>
+                <!--<td>{{x.points / x.count || 0}}</td>-->
                 <td>
-                    <button class="btn btn-default" ng-click="challenge()">Challenge</button>
+                    <button class="btn btn-default" ng-click="enterGame()">Enter in game</button>
                 </td>
             </tr>
         </table>

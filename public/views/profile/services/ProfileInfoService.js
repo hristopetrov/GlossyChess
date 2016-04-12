@@ -6,11 +6,11 @@ angular.module('chessApp')
                 return user;
             },
 
-            getActiveUsers: function () {
-                return $http.get('api/profile');
+            getActiveGames: function () {
+                return $http.get('api/freegames');
             },
 
-            challenge: function(user){
+            enterGame: function(user){
                 return $http.post('json/activeUsers.json', {"username": user.username});
             },
 
@@ -22,8 +22,9 @@ angular.module('chessApp')
                 //return $http.post('api/profile/accept', {"challenger": challenger.username});
             },
 
-            decline: function(){
-
+            addGame: function(user){
+                //return $http.post('api/profile', {"user": user});
             }
+
         }
     }])

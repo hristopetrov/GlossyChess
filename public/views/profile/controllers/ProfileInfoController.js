@@ -6,11 +6,11 @@ angular.module('chessApp')
         $scope.score = $scope.user.score;
         $scope.numberOfPlayedGames = $scope.user.numberOfPlayedGames;
         $rootScope.showMenu = true;
-        $scope.activeUsers = getActiveUsers();
+        $scope.activeGames = getActiveGames();
         $scope.forEdit = false;
         $scope.rate = $scope.user.rating;
         $scope.isCollapsed = true;
-        $scope.activeUsersLength = $scope.activeUsers !== undefined ? $scope.activeUsers.length : 0;
+        $scope.activeGamesLength = $scope.activeGames !== undefined ? $scope.activeGames.length : 0;
         $scope.maxSize = 5;
         $scope.bigCurrentPage = 1;
         $scope.challenges = [1, 2,3];
@@ -20,17 +20,17 @@ angular.module('chessApp')
             $scope.image = image;
         }
 
-        function getActiveUsers() {
-            ProfileInfoService.getActiveUsers()
+        function getActiveGames() {
+            ProfileInfoService.getActiveGames()
                 .then(function success(response) {
                     console.log(response.data);
-                    $scope.activeUsers =  response.data;
+                    $scope.activeGames =  response.data;
                 }, function error(response) {
                     return;
                 })
         }
 
-        $scope.challenge = function (user) {
+        $scope.enterGame = function (user) {
             //ProfileInfoService.challenge(user);
 
         }
@@ -60,11 +60,18 @@ angular.module('chessApp')
                 })*/
         }
         
-        $scope.decline = function (username) {
+    /*    $scope.decline = function (username) {
             ProfileInfoService.decline()
                 .then(function (){
                     var element = document.getElementById(username)
                     element.parentNode.removeChild(element);
+                })
+        }*/
+
+        $scope.addRow = function() {
+            ProfileInfoService.addGame()
+                .then(function success(response){
+                    $scope.activeGames.push(response);
                 })
         }
 
