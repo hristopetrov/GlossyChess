@@ -22,4 +22,10 @@ class GameController extends Controller
    {
    	 return Game::where('status', '=', '0')->with('playerOne','playerTwo')->get(); 
    }
+   
+   public function joinGame()
+   {
+   	$user = Auth::user();
+   	return Game::create(['player2_id' => $user->id]);
+   }
 }
