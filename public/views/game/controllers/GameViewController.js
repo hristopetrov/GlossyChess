@@ -4,7 +4,7 @@ angular.module('chessApp')
 
         $scope.takenFigures = '';
         $scope.user = $rootScope.user;
-        console.log($scope.user.name);
+        //console.log($scope.user.name);
         chessGame.init(connection);
 
         console.log('connection in game view controller: ', connection);

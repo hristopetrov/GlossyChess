@@ -155,8 +155,6 @@ var Figure = (function () {
                     text.anchor.set(0.5);
                 }
 
-                console.log('connection in move: ', connection);
-
                 connection.send(JSON.stringify(serverInfo));
 
             }

@@ -13,7 +13,7 @@ class AddStatusFieldToUser extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->boolean('status')->default('false');
+            $table->boolean('status')->default(0);
         });
     }
 

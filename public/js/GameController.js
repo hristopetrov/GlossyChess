@@ -190,7 +190,6 @@ var chessGame = (function () {
     }
 
     function updateFigurePosition(response) {
-        console.log(response);
         var charCode = response.moveCharcode;
         var oldPosition = charCode.split(' ')[0];
         var newPosition = charCode.split(' ')[1];
@@ -206,19 +205,26 @@ var chessGame = (function () {
             document.getElementById('opposite-taken-figures').innerHTML = newCell.getFigure().getFont();
 
             //update figures status here
-        } else {
-            //var image = oldCell.getImage();
-            var animation = game.add.tween(currentFigureImage);
-            animation.to({
-                x: newCell.getImage().x,
-                y: newCell.getImage().y
-            }, 1500, Phaser.Easing.Linear.In, true);
-            animation.start();
-            newCell.setFigure(currentFigure);
-            currentFigure.setCell(newCell);
-            currentFigure.setActiveCells([]);
-            oldCell.setFigure(null);
+        }
+        //var image = oldCell.getImage();
+        var animation = game.add.tween(currentFigureImage);
+        animation.to({
+            x: newCell.getImage().x,
+            y: newCell.getImage().y
+        }, 1500, Phaser.Easing.Linear.In, true);
+        animation.start();
+        newCell.setFigure(currentFigure);
+        currentFigure.setCell(newCell);
+        currentFigure.setActiveCells([]);
+        oldCell.setFigure(null);
 
+
+        if (response.mattResponse.matt) {
+            var text = game.add.text(game.world.centerX, game.world.centerY, 'You lose!', {
+                font: '64px Arial',
+                fill: 'red'
+            });
+            text.anchor.set(0.5);
         }
     }
 

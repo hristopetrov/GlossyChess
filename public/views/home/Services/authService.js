@@ -1,18 +1,17 @@
-chessApp.factory('authService',function($http, $q, identityService){
+chessApp.factory('authService', function ($http, $q, $rootScope, identityService) {
 
     var TOKEN_KEY = 'authentication'; // cookie key
 
 
-
-    var register = function register(user){
+    var register = function register(user) {
 
         var deferred = $q.defer();
 
         $http.post('/api/user/register', user)
-            .success(function(response){
+            .success(function (response) {
                 deferred.resolve(response);
             })
-            .error(function(err){
+            .error(function (err) {
                 deferred.reject(err)
             })
 
@@ -22,23 +21,17 @@ chessApp.factory('authService',function($http, $q, identityService){
     var login = function login(user) {
         var deferred = $q.defer();
 
-        var data = user ;//"grant_type=password&username=" + (user.username || '') + '&password=' + (user.password || '');
+        var data = user;//"grant_type=password&username=" + (user.username || '') + '&password=' + (user.password || '');
         // data - formata v koito survura o4akva dannite
 
 
         $http.post('/api/user/login', data)
             .success(function (response) {
-                var tokenValue = response.api_token;  // tokena koito mi vru6ta api-to
-                console.log(response);
+                var tokenValue = response.api_token;
                 var theBigDay = new Date();
                 theBigDay.setHours(theBigDay.getHours() + 72);
-
-                //window.localStorage.setItem('currentUser', tokenValue);
                 window.localStorage.setItem('currentUser', JSON.stringify(response));
-                // save cookie
-
                 $http.defaults.headers.common.Authorization = 'Bearer ' + tokenValue;
-                // slagam ob6t header koito vseki put se izpra6ta
                 deferred.resolve(data);
 
             })
@@ -50,17 +43,26 @@ chessApp.factory('authService',function($http, $q, identityService){
     };
 
 
-
     return {
-        register: register, // tuk se podava user
+        register: register,
         login: login,
         isAuthenticated: function () {
             return !!window.localStorage.getItem('currentUser');
         },
         logout: function () {
-            window.localStorage.removeItem('currentUser');   // iztrivame cookie - to
-            $http.defaults.headers.common.Authorization = null; // iztrivame header-a
-            identityService.removeUser(); // currentUser = {};
+            var deferred = $q.defer();
+            $http.post('api/user/logout', {"userId": $rootScope.user.id})
+                .success(function () {
+                    window.localStorage.removeItem('currentUser');
+                    $http.defaults.headers.common.Authorization = null;
+                    identityService.removeUser();
+                    deferred.resolve();
+                })
+                .error(function(err){
+                    deferred.reject(err);
+                });
+
+            return deferred.promise;
         }
     };
 

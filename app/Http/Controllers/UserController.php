@@ -46,7 +46,7 @@ class UserController extends Controller
 
     public function activeUsers()
     {
-        $users = User::where('status', '=', 1);
+        $users = User::where('status', '=', 1)->get();
         return $users;
     }
 
