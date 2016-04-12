@@ -35,13 +35,7 @@ angular.module('chessApp')
             $rootScope.logout = function () {
                 console.log('logout');
                 authService.logout()
-                    .then(function success(){
-                        $rootScope.showMenu = false;
-                        window.location.href = '#home';
-                    }, function error(){
-                        console.error('Unsuccessful function execution!');
-                    });
-
+                window.location.href = '#/';
             }
 
             $scope.ok = function () {

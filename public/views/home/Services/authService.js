@@ -31,7 +31,7 @@ chessApp.factory('authService', function ($http, $q, $rootScope, identityService
                 var theBigDay = new Date();
                 theBigDay.setHours(theBigDay.getHours() + 72);
                 window.localStorage.setItem('currentUser', JSON.stringify(response));
-                $http.defaults.headers.common.Authorization = 'Bearer ' + tokenValue;
+                $http.defaults.headers.common['X-Api-Token'] = tokenValue;
                 deferred.resolve(data);
 
             })
@@ -50,19 +50,9 @@ chessApp.factory('authService', function ($http, $q, $rootScope, identityService
             return !!window.localStorage.getItem('currentUser');
         },
         logout: function () {
-            var deferred = $q.defer();
-            $http.post('api/user/logout', {"userId": $rootScope.user.id})
-                .success(function () {
-                    window.localStorage.removeItem('currentUser');
-                    $http.defaults.headers.common.Authorization = null;
-                    identityService.removeUser();
-                    deferred.resolve();
-                })
-                .error(function(err){
-                    deferred.reject(err);
-                });
-
-            return deferred.promise;
+            window.localStorage.removeItem('currentUser');
+            $http.defaults.headers.common.Authorization = null;
+            identityService.removeUser();
         }
     };
 
