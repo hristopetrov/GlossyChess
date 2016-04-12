@@ -97,6 +97,5 @@
 <script src="socketServer/SocketService.js"></script>
 <script src="views/game/controllers/GameViewController.js"></script>
 
-
 </body>
 </html>
