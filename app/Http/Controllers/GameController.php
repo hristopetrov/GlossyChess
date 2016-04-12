@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Game;
+use Illuminate\Support\Facades\Auth;
+
 
 class GameController extends Controller
 {
