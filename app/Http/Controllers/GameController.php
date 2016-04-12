@@ -20,12 +20,21 @@ class GameController extends Controller
    
    public function index()
    {
-   	 return Game::where('status', '=', '0')->with('playerOne','playerTwo')->get(); 
+   	 	return Game::where('status', '=', '0')->with('playerOne','playerTwo')->get(); 
    }
    
    public function joinGame()
    {
-   	$user = Auth::user();
-   	return Game::create(['player2_id' => $user->id]);
+	   	$user = Auth::user();
+	   	return Game::create(['player2_id' => $user->id]);
    }
+   public function getGameStatus($id)
+   {
+	   	$game = Game::findOrFail($id);
+	   	return ['status' => !empty($game->player2_id)];
+   }
+   
+   
+   
+   
 }
