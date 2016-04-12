@@ -31,7 +31,7 @@ angular.module('chessApp')
         }
 
         $scope.enterGame = function (user) {
-            //ProfileInfoService.challenge(user);
+
 
         }
 

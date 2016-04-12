@@ -15,7 +15,8 @@ class UsersTableSeeder extends Seeder
             ->insert([
                 'name' => 'Ico Petrov',
                 'email' => 'test.test@test.com',
-                'password' => bcrypt('test')
+                'password' => bcrypt('test'),
+                'api_token' => md5('test')
             ]);
     }
 }

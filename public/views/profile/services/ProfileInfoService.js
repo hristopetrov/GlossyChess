@@ -1,17 +1,33 @@
 angular.module('chessApp')
     .factory('ProfileInfoService', [ '$http', function ($http) {
-       // $scope.user = localStorage.getItem('user');
+        var user = {};
         return{
             getInfo: function () {
+
+                if (!user) {
+                    var data = JSON.parse(localStorage.getItem('user'));
+                    for (var i in data) {
+                        user[i] = data[i];
+                    }
+                }
+
                 return user;
             },
 
             getActiveGames: function () {
-                return $http.get('api/freegames');
+                var user = this.getInfo();
+                return $http({
+                    method: 'GET',
+                    url:'api/freegames',
+                    data: {
+                        "api_token" : user.api_token
+                    }
+                });
             },
 
             enterGame: function(user){
-                return $http.post('json/activeUsers.json', {"username": user.username});
+                return $http.post('json/activeUsers.json', {"api_token": user.api_token,
+                                                            "gameid": gameid});
             },
 
             getNotifications: function(){
@@ -22,8 +38,8 @@ angular.module('chessApp')
                 //return $http.post('api/profile/accept', {"challenger": challenger.username});
             },
 
-            addGame: function(user){
-                //return $http.post('api/profile', {"user": user});
+            addGame: function(){
+                return $http.get('api/newgame');
             }
 
         }
