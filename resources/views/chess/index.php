@@ -22,7 +22,7 @@
                 <a ng-click="logout()" id="logout">Logout</a>
             </div>
             <div id="notifications" class="pull-right">
-                 <span uib-dropdown on-toggle="toggled(open)" >
+                 <span uib-dropdown on-toggle="toggled(open)">
               <a href id="simple-dropdown" uib-dropdown-toggle>
                   Notifications <span class="badge">0</span>
               </a>
@@ -32,29 +32,31 @@
                       <button class="accept" ng-click="accept({{users.name}})" id="{{users.name}}">Accept</button>
                       <button class="decline" ng-click="decline({{users.name}})" id="{{users.name}}">&times;</button>
                   </li>-->
-                  <li>1</li>
-                  <li>2</li>
-                  <li>3</li>
-                  <li>4</li>
-                  <li>5</li>
+
+                  <li ng-repeat="not in challenges" class="notifications-list">
+                      <span>{{not}}</span>
+                      <button>Accept</button>
+                  </li>
+
+
               </ul>
             </span>
 
             </div>
 
-          <!--  <div class="btn-group">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Action <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                </ul>
-            </div>
-        </div>-->
+            <!--  <div class="btn-group">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Action <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu">
+                      <li><a href="#">Action</a></li>
+                      <li><a href="#">Another action</a></li>
+                      <li><a href="#">Something else here</a></li>
+                      <li role="separator" class="divider"></li>
+                      <li><a href="#">Separated link</a></li>
+                  </ul>
+              </div>
+          </div>-->
 
     </nav>
 
@@ -69,13 +71,14 @@
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
 <script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
 <script src="node_modules/phaser/dist/phaser.min.js"></script>
-<script src="node_modules/requirejs/require.js"></script>
+<!--<script src="node_modules/requirejs/require.js"></script>-->
+<script src="node_modules/socket.io/lib/socket.js"></script>
 <script src="node_modules/socket.io/lib/client.js"></script>
 <script src="js/GameController.js"></script>
 <script src="app.js"></script>
 <script src="directives.js"></script>
 <!--<script src="views/home/Services/usersService.js"></script>-->
-
+<script src="socketServer/server.js"></script>
 <script src="views/home/services/identityService.js"></script>
 <script src="views/home/services/authService.js"></script>
 <script src="views/home/controllers/HomeController.js"></script>

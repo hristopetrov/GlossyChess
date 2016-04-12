@@ -14,7 +14,7 @@ var Pawn = (function (parent) {
             var vertical = position.charAt(0);
             var inForwardRight = String.fromCharCode(vertical.charCodeAt(0) + 1) + (parseInt(horizontal) + 1);
             var inForwardLeft = String.fromCharCode(vertical.charCodeAt(0) - 1) + (parseInt(horizontal) + 1);
-            /*console.log(inForwardLeft);
+         /*   console.log(inForwardLeft);
             console.log(inForwardRight);*/
             var activeCells = [];
             if (game.cellAt(vertical + (parseInt(horizontal) + 1)).getFigure() == null) {
@@ -25,13 +25,13 @@ var Pawn = (function (parent) {
             }
 
             if (inForwardLeft.charCodeAt(0) > 97 && game.cellAt(inForwardLeft).getFigure() !== null && game.cellAt(inForwardLeft).getFigure().getIsOpposite()) {
-                activeCells.push(game.cellAt(game.cellAt(inForwardLeft)));
+                activeCells.push(game.cellAt(inForwardLeft));
             }
 
             if (inForwardRight.charCodeAt(0) < 104 && game.cellAt(inForwardRight).getFigure() !== null &&game.cellAt(inForwardRight).getFigure().getIsOpposite()) {
                 activeCells.push(game.cellAt(inForwardRight));
             }
-
+            console.log(activeCells);
             for (var i = 0; i < activeCells.length; i++) {
                 activeCells[i].getImage().visible = true;
             }

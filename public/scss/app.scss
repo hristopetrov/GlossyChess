@@ -163,3 +163,27 @@ table{
   font-size: 1.5em;
   color: $text-color;
 }
+
+#search,
+#searchActiveUsers,
+#create-game{
+  left: -15px;
+}
+
+#create{
+  margin-top: 10px;
+}
+
+#profile-image,
+#user-information{
+  float:left
+}
+
+.notifications-list{
+  margin: 2px;
+  line-height: 2;
+  button{
+    float:right;
+    height: 29px;
+  }
+}

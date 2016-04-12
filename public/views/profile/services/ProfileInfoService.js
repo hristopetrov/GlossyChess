@@ -26,12 +26,13 @@ angular.module('chessApp')
             },
 
             enterGame: function(gameID){
-                return $http.post('api/joingame', {"api_token" : this.getInfo().api_token,
+                return $http.get('api/joingame', {"api_token" : this.getInfo().api_token,
                                                     "gameid": gameID});
             },
 
             getNotifications: function(){
-                  //return $http.get('api/profile/notifications');
+                  return $http.get('api/profile/notifications', {"api_token" : this.getInfo().api_token,
+                                                                 "gameid": gameID});
             },
 
             accept: function(){

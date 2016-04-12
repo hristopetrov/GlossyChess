@@ -153,6 +153,14 @@ var Figure = (function () {
                 if(mattResponse.matt){
                     var text = game.add.text(game.world.centerX, game.world.centerY, 'You win!', { font: '64px Arial', fill: 'green' });
                     text.anchor.set(0.5);
+
+                    for(var i = 0; i < 8; i++){
+                        for(var j = 0; j < 8; j++){
+                            if(cells[i][j].getFigure() !== null){
+                                cells[i][j].getFigure().getImage().inputEnabled = false;
+                            }
+                        }
+                    }
                 }
 
                 connection.send(JSON.stringify(serverInfo));

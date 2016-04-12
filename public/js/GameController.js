@@ -42,7 +42,7 @@ var chessGame = (function () {
                 cells[i] = [];
 
                 for (var x = START_PIXELS; x < CELL_PIXELS * 8; x += CELL_PIXELS) {
-                    var cell = this.game.add.image(x, y, 'cell');
+                    var cell = this.game.add.image(x + 2, y + 3, 'cell');
                     cell.name = 'cell';
                     var coordinates = horizontals[j] + (7 - i + 1);
 
@@ -203,10 +203,8 @@ var chessGame = (function () {
         if (newCell.getFigure() != null && !newCell.getFigure().getIsOpposite()) {
             newCell.getFigure().getImage().destroy();
             document.getElementById('opposite-taken-figures').innerHTML = newCell.getFigure().getFont();
-
-            //update figures status here
         }
-        //var image = oldCell.getImage();
+
         var animation = game.add.tween(currentFigureImage);
         animation.to({
             x: newCell.getImage().x,
@@ -225,6 +223,14 @@ var chessGame = (function () {
                 fill: 'red'
             });
             text.anchor.set(0.5);
+
+            for(var i = 0; i < 8; i++){
+                for(var j = 0; j < 8; j++){
+                    if(cells[i][j].getFigure() !== null){
+                        cells[i][j].getFigure().getImage().inputEnabled = false;
+                    }
+                }
+            }
         }
     }
 

@@ -18,10 +18,8 @@ chessApp.factory('identityService',function($http, $q){
             currentUser = user;
             deferred.resolve(user);
         },
-        removeUser: function (response) {
+        removeUser: function () {
             currentUser = {};
-            deferred = $q.defer();
-
         }
     }
 
