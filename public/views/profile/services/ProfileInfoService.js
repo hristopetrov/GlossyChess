@@ -26,6 +26,10 @@ angular.module('chessApp')
             },
 
             enterGame: function(gameID){
+                //add gameId to localStorage
+                localStorage.setItem('gameID', gameID);
+                window.location.href = '#/game'; //premahni za da se vurjej s ico
+
                 return $http.get('api/joingame', {"api_token" : this.getInfo().api_token,
                                                     "gameid": gameID});
             },

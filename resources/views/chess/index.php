@@ -72,13 +72,12 @@
 <script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
 <script src="node_modules/phaser/dist/phaser.min.js"></script>
 <!--<script src="node_modules/requirejs/require.js"></script>-->
-<script src="node_modules/socket.io/lib/socket.js"></script>
-<script src="node_modules/socket.io/lib/client.js"></script>
+<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 <script src="js/GameController.js"></script>
 <script src="app.js"></script>
 <script src="directives.js"></script>
 <!--<script src="views/home/Services/usersService.js"></script>-->
-<script src="socketServer/server.js"></script>
+<!--<script src="socketServer/server.js"></script>-->
 <script src="views/home/services/identityService.js"></script>
 <script src="views/home/services/authService.js"></script>
 <script src="views/home/controllers/HomeController.js"></script>
