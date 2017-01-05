@@ -70,7 +70,7 @@
 <script src="node_modules/angular-animate/angular-animate.min.js"></script>
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
 <script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
-<script src="node_modules/phaser/dist/phaser.min.js"></script>
+<script type="text/javascript" src="bower_components/phaser/build/phaser.min.js"></script>
 <!--<script src="node_modules/requirejs/require.js"></script>-->
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 <script src="js/GameController.js"></script>
@@ -79,7 +79,7 @@
 <!--<script src="views/home/Services/usersService.js"></script>-->
 <!--<script src="socketServer/server.js"></script>-->
 <script src="views/home/services/identityService.js"></script>
-<script src="views/home/services/authService.js"></script>
+<script src="views/home/Services/authService.js"></script>
 <script src="views/home/controllers/HomeController.js"></script>
 <script src="views/home/controllers/LoginController.js"></script>
 <script src="views/home/controllers/RegistrationController.js"></script>
